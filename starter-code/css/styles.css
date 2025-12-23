@@ -1,0 +1,28 @@
+/* Ensure predictable sizing */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container grid */
+.container {
+  display: grid;
+
+  grid-template-columns: 272px 290px minmax(0, 1fr) 258px;
+  grid-template-rows: 81px minmax(0, 1fr);
+
+  grid-template-areas:
+    "b a a a"
+    "b c d e"
+    "b c d e";
+
+  height: 100vh;
+}
+
+/* Individual styling */
+.sidebar-nav { grid-area: b; background-color: red; }
+.header { grid-area: a; background-color: blue; }
+.sidebar-all { grid-area: c; background-color: green; }
+.content { grid-area: d; background-color: yellow; }
+.right-menu { grid-area: e; background-color: pink;  }
