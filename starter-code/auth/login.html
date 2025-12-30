@@ -5,27 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  <link rel="stylesheet" href="./starter-code/css/styles.css">
+  <link rel="stylesheet" href="../css/auth.css">
   <title>Frontend Mentor | Note-taking web app</title>
 </head>
 <body>
+  <div class="page">
 
-  Welcome to Notes
-  Please log in to continue
+    <div class="login-card">
+      <div class="feather"> 
+        <img src="../assets/images/logo.svg" alt=""/>
+      </div>
 
-  Email Address
-  email@example.com
+      <div class="welcome">
+        <h1>Welcome to Notes</h1>
+      <p class="signup">Please log in to continue</p>
+    </div>
 
-  Password
-  Forgot
+      <div class="form"> 
 
-  Login
+        <div class="field-column">
+        <label for="email">Email Address</label>
+        <input  type="email"id="email" placeholder="email@example.com" />
+       </div>
+        
+      
+      <div class="field-column">
+      <div class="field-row">
+        <label for="password">Password</label>
+        <a class="forgetlink" href="#">Forgot</a>
+      </div>
+      <input type="password" id="password" />
+      </div>
 
-  Or log in with:
 
-  Google
+      <button class="login-btn">Login</button>
+    </div>
+    <hr class="divider" />
 
-  No account yet? Sign Up
+      <div class="other-logs">
+        <p class="log-phrase">Or log in with:</p>
 
+      <button class="google-btn"><img src="../assets/images/icon-google.svg" alt=""/>
+        <span class="googleword">Google</span>
+      </button>
+
+      </div>
+      <hr class="divider" />
+      <div>
+        <p class="signup">
+        No account yet? <a class="signuplink" href="#">Sign Up</a>
+      </p>
+      </div>
+
+    </div>
+
+  </div>
 </body>
+
+
 </html>

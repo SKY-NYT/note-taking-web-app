@@ -5,27 +5,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  <link rel="stylesheet" href="./starter-code/css/styles.css">
+  <link rel="stylesheet" href="../css/auth.css">
   <title>Frontend Mentor | Note-taking web app</title>
 </head>
-<body>
+<body class="signup-page">
+<div class="page">
 
-  Create Your Account
-  Sign up to start organizing your notes and boost your productivity.
+    <div class="login-card">
+      <div class="feather"> 
+        <img src="../assets/images/logo.svg" alt=""/>
+      </div>
 
-  Email Address
-  email@example.com
+      <div class="welcome">
+        <h1>Create Your Account</h1>
+      <p class="signup">Sign up to start organizing your notes and boost your productivity.</p>
+    </div>
 
-  Password
+      <div class="form"> 
+
+        <div class="field-column">
+        <label for="email">Email Address</label>
+        <input  type="email"id="email" placeholder="email@example.com" />
+       </div>
+        
+      
+      <div class="field-column">
+      <div class="field-row">
+        <label for="password">Password</label>
+        
+      </div>
+      <input type="password" id="password"/>
+      <p class="signup info-text">
+  <svg
+    class="info-icon"
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <!-- Full circle -->
+    <circle cx="12" cy="12" r="10" />
+    <!-- The vertical line of "i" -->
+    <line x1="12" y1="10" x2="12" y2="16" />
+    <!-- The dot of "i" -->
+    <line x1="12" y1="7" x2="12" y2="7.01" />
+  </svg>
   At least 8 characters
+</p>
+      </div>
 
-  Sign Up
 
-  Or log in with:
+      <button class="login-btn">Sign Up</button>
+    </div>
+    <hr class="divider" />
 
-  Google
+      <div class="other-logs">
+        <p class="log-phrase">Or log in with:</p>
 
-  Already have an account? Login
+      <button class="google-btn"><img src="../assets/images/icon-google.svg" alt=""/>
+        <span class="googleword">Google</span>
+      </button>
 
+      </div>
+      <hr class="divider" />
+      <div>
+        <p class="signup">
+        Already have an account? <a class="signuplink" href="#">Login</a>
+      </p>
+      </div>
+
+      
+
+      
+
+  
+
+      
+
+    </div>
+
+  </div>
+  
 </body>
 </html>
