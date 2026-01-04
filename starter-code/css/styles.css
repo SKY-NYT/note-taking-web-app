@@ -1,3 +1,40 @@
+:root {
+
+    /* the neutral colors */
+    --on-primary: #ffffff;
+    --neutral-0:   #ffffff;
+  --neutral-50:  #F5F7FA;
+  --neutral-100: #F3F5F8;
+  --neutral-200: #E0E4EA;
+  --neutral-300: #CACFD8;
+  --neutral-400: #99A0AE;
+  --neutral-500: #717784;
+  --neutral-600: #525866;
+  --neutral-700: #2B303B;
+  --neutral-800: #232530;
+  --neutral-900: #191B25;
+  --neutral-950: #0E121B;
+  /* Primary Blue */
+  --blue-600: #2547D0;
+  --blue-500: #335CFF;
+  --blue-100: #EBF1FF;
+
+  /* Success Green */
+  --green-500: #21C16B;
+  --green-100: #D1FBE9;
+
+  /* Error Red */
+  --red-500: #FB3748;
+  --red-100: #FFD5D8;
+
+   --control-width: 27.75rem;
+  --control-height: 2.75rem;
+  --radius-md: 0.75rem;
+  --radius-sm: 0.5rem; 
+
+  --control-width-mobile:19.4375rem
+  
+}
 /* Ensure predictable sizing */
 * {
   box-sizing: border-box;
@@ -14,15 +51,534 @@
 
   grid-template-areas:
     "b a a a"
-    "b c d e"
     "b c d e";
+    
 
   height: 100vh;
+  background-color: var(--neutral-0);
+}
+.hidden,.divider {
+  display: none;
+}
+/* Individual styling */
+.sidebar-nav {
+  grid-area: b;                /* design height */
+  border-right: 1px solid var(--neutral-200);
+  padding: 1.5rem 2rem;            /* spacing/150 ~ 24px, spacing/200 ~ 32px */
+  display: flex;
+  flex-direction: column;        /* stack vertically */
+  gap: 1rem;                     /* spacing between items */
+  background-color: var(--neutral-0);
+  box-sizing: border-box;        /* include padding in width */
 }
 
-/* Individual styling */
-.sidebar-nav { grid-area: b; background-color: red; }
-.header { grid-area: a; background-color: blue; }
-.sidebar-all { grid-area: c; background-color: green; }
-.content { grid-area: d; background-color: yellow; }
-.right-menu { grid-area: e; background-color: pink;  }
+.app-logo {
+  display: flex;
+  justify-content: space-between; /* logo left, optional item right */
+  align-items: center;             /* vertically center the content */                   /* Figma height */
+}
+.nav-section {
+  display: flex;
+  flex-direction: column; /* stack items vertically */          /* Figma height */
+  gap: 0.25rem;  
+ 
+}
+#nav-home {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* left group | arrow */
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+#nav-home:hover {
+  background-color: var(--neutral-100);
+}
+
+/* icon + text group */
+#nav-home .nav-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* EXACT spacing between icon and text */
+}
+#nav-archived {
+  display: flex;
+  align-items: center; /* left group | arrow */
+  padding: 0.625rem 0.75rem;
+   border-radius: 0.5rem;
+  cursor: pointer;
+  gap: 0.5rem;
+}
+#nav-archived:hover {
+  background-color: var(--neutral-100);
+}
+
+.tag-item{display: flex;
+  align-items: center; 
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  gap: 0.5rem;}
+.nav-divider{
+  height: 1px;
+  background: var(--neutral-100);
+}
+
+
+.header {
+  grid-area: a;                     /* design height */
+  border-bottom: 1px solid var(--neutral-200);
+  display: flex;                     /* align content horizontally */
+  justify-content: space-between;    /* left and right aligned items */
+  align-items: center;               /* vertical centering */
+  padding: 0 4rem;                   /* spacing/400 ~ 64px left & right */
+  background-color: var(--neutral-0);
+  box-sizing: border-box;
+}
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* updated gap */
+  width: 18.75rem; /* updated width */
+  height: 2.75rem; /* container height */
+}
+
+.search-box {
+  position: relative;
+  flex: 1; /* take remaining space inside container */
+  height: 100%; /* match container height */
+}
+
+.search-box input {
+  width: 100%;
+  height: 100%;
+  padding-left: 40px;  /* space for search icon inside */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-box .search-icon {
+  position: absolute;
+  left: 10px;           /* inside input field */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;  /* so clicks go to input */
+}
+
+.settings-icon {
+  
+  cursor: pointer;
+}
+
+
+.sidebar-all {
+  grid-area: c;                   /* Figma height */
+  border-right: 1px solid var(--neutral-200);
+  display: flex;                    /* for stacking children vertically */
+  flex-direction: column;           /* vertical layout */
+  gap: 1rem;                        /* spacing between items */
+  padding: 2rem 1rem 2rem 2rem;    /* top/right/bottom/left -> spacing/250, spacing/200, spacing/250, spacing/400 */
+  box-sizing: border-box;
+  background-color: var(--neutral-0);
+}
+.create-note-desktop{
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  gap: 4px;
+  padding: 0.8rem 0.5rem; 
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+    background-color: var(--blue-500);
+    border-radius: var(--radius-sm);
+    color: var(--on-primary);
+    font-family: 'Inter';
+}
+
+.empty-state{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: var(--neutral-100);
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--neutral-100);
+}
+.archived-info{
+background-color: var(--neutral-0);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--neutral-100);
+  width: 100%;
+}
+
+.content {
+  grid-area: d;                   
+  border-right: 1px solid var(--neutral-200);
+  display: flex;                    /* allows vertical stacking or flexible layout */
+  flex-direction: column;
+  gap: 1rem;                        
+  padding: 1rem 1rem 1rem ;   
+  box-sizing: border-box;
+  background-color: var(--neutral-0);
+}
+.note-title {
+  width: 100%;
+  max-width: 540px;
+
+  font-family: 'Inter';
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--neutral-950);
+  background: transparent;
+
+  border: none;
+  outline: none;
+}
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap:2rem; /* ends of the row */
+  width: 100%;
+}
+
+.meta-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* space between icon & text */
+}
+.meta-text {
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--neutral-600);
+}
+.meta-divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--neutral-200);
+  margin: 0.75rem 0;
+}
+
+
+.tag-input {
+  width: 100%;
+  border: none;
+  outline: none;
+}
+
+.note-content{
+  width: 100%;  ;
+height: 100%;
+  font-family: Inter;
+font-weight: 400;
+font-style: Regular;
+font-size: 14px;
+line-height: 130%;
+color:var(--neutral-700);
+ resize: none;
+ border: none;
+  outline: none;
+  
+
+}
+.editor-actions{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.btn-primary{
+  width: 99px;
+height: 41px;
+padding: 0.25rem 0.5rem;
+border-radius: var(--radius-sm);
+background-color: var(--blue-500);
+color: var(--on-primary);
+border:none;
+cursor: pointer;
+
+}
+.btn-secondary{
+  width: 99px;
+height: 41px;
+padding-top: 0.25rem;
+padding-right: 0.5rem;
+padding-bottom: 0.25rem;
+padding-left: 0.5rem;
+gap: 0.5rem;
+border-radius: var(--radius-sm);
+background-color: var(--neutral-100);
+color: var(--neutral-950);
+border:none;
+cursor: pointer;
+}
+.right-menu {
+  grid-area: e;                     /* positions in your grid */                    /* Figma height */
+  border-left: 1px solid var(--neutral-200);  /* usually left border if it’s on the right */
+  display: flex;                    /* for stacking buttons or menu items */
+  flex-direction: column;
+  gap: 1rem;                        /* spacing between menu items */
+  padding: 2rem 0 2rem 1rem;        /* top/right/bottom/left -> spacing/250, right: 0, bottom: spacing/250, left: spacing/200 */
+  box-sizing: border-box;           /* include padding in width/height */
+  background-color: var(--neutral-0);
+  opacity: 1;
+}
+.tablet-menu-bar, .tabapp-logo, .create-note-mobile {
+  display: none;
+}
+
+/* Tablet: 481px to 1024px */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .container {
+    display: block; /* stacked for tablet */
+  }
+.create-note-desktop {
+    display: none;
+  }
+  .sidebar-all {                  /* Figma height */                      /* spacing between items */
+  padding: 0rem 1rem 2rem 2rem;    /* top/right/bottom/left -> spacing/250, spacing/200, spacing/250, spacing/400 */
+ 
+  
+}
+  .create-note-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;         /* circular size */
+    height: 4rem;
+    border-radius: 50%;
+    border: 1px solid var(--blue-500);
+    background-color: var(--blue-500);
+    position: fixed;        /* floating button */
+    bottom: 6.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    padding: 0;             /* no extra padding */
+    
+  box-shadow: 0px 7px 11px rgba(202, 207, 216, 0.7);
+  }
+  .header {
+    width: 100%;
+    padding: 1rem 2rem; /* adjust for tablet spacing */
+    border:none;
+  }
+  .divider {
+    display: block;
+    height: 1px;
+    background: var(--neutral-100);
+    
+  }
+
+  .content {
+    width: 100%;
+    padding: 2rem 2rem;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+  }
+.empty-state{
+  display: flex;
+  background-color: var(--neutral-100);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--neutral-200);
+  padding: 0.5rem ;
+
+}
+
+
+
+
+
+
+
+
+  /* Hide desktop sidebars */
+  .sidebar-nav,
+  .right-menu,.search-container,.content{
+    display: none;
+  }
+.tabapp-logo {
+    display: block; /* visible on tablet */
+    
+  }
+  .tabapp-logo {
+  display: flex;               /* layout for logo content */
+  align-items: center;         /* vertically center items */
+  gap: 1rem;                   /* spacing between inner elements */
+  background-color:var(--neutral-100);             /* fixed height */
+  padding: 2rem 2rem;          /* top/bottom 2rem, left/right 4rem */
+      /* angle 0 */
+       /* include padding in width */
+}
+  /* Show tablet menu bar */
+  .tablet-menu-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3.5rem;
+    justify-content: space-between;
+    border:none;
+    padding: 1rem 2rem;
+    border-top: 1px solid var(--neutral-200);
+    z-index: 100;
+  }
+  .tablet-menu-bar button {
+  background: transparent;   /* remove background */
+  border: none;               /* remove border */
+  padding: 0;                 /* remove extra space */
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  flex-direction: column;   /* 👈 icon on top, text below */
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;  
+  color: var(--neutral-500);
+}
+.tablet-menu-bar button:hover,
+.tablet-menu-bar button.active {
+  color: var(--blue-500);
+}
+
+}
+
+/* Mobile: 0px to 480px */
+@media (max-width: 480px) {
+  .container {
+    display: block;
+    width: 100%;
+    padding: 0;
+  }
+  .create-note-desktop {
+    display: none;
+  }
+  .sidebar-all {                  /* Figma height */                      /* spacing between items */
+  padding: 0rem 1rem 2rem 2rem;}
+
+.tabapp-logo {
+    display: block; /* visible on mobile */
+    display: flex;               /* layout for logo content */
+  align-items: center;         /* vertically center items */
+  gap: 1rem;                   /* spacing between inner elements */
+  background-color:var(--neutral-100);             /* fixed height */
+  padding: 1rem
+  }
+  .header {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border:none;
+  }
+
+  .content {
+    width: 100%;
+    height: calc(100vh - 54px - 56px); 
+    padding: 1rem;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    overflow-y: auto;
+  }
+.empty-state{
+  display: flex;
+  background-color: var(--neutral-100);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--neutral-200);
+  padding: 0.5rem ;
+
+}
+  .sidebar-nav,
+  .right-menu,.search-container,.content {
+    display: none; /* hide desktop sidebars */
+  }
+
+  .tablet-menu-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    height: 0.5rem;
+    justify-content: space-between;
+    border:none;
+    padding: 2rem 2rem;
+    border-top: 1px solid var(--neutral-200);
+  }
+  .tablet-menu-bar button {
+  background: transparent;   /* remove background */
+  border: none;               /* remove border */
+  padding: 0;                 /* remove extra space */
+  margin: 0;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  flex-direction: column;   /*  icon on top, text below */
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;  
+  color: var(--neutral-500);
+}
+.tablet-menu-bar button span {
+  display: none;
+}
+  .tablet-menu-bar button:hover,
+.tablet-menu-bar button.active {
+  color: var(--blue-500);
+}
+.create-note-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;         /* circular size */
+    height: 2rem;
+    border-radius: 50%;
+    border: 1px solid var(--blue-500);
+    background-color: var(--blue-500);
+    position: fixed;        /* floating button */
+    bottom: 5.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    padding: 0;             /* no extra padding */
+    
+  box-shadow: 0px 7px 11px rgba(202, 207, 216, 0.7);
+  }
+  .create-note-mobile img {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+}
+
+
+
+@media (prefers-color-scheme:dark) {
+  :root {
+    /* Backgrounds */
+    --neutral-0:   #0E121B;   /* cards */
+    --neutral-100: #2B303B;   /* page background */
+
+    /* Text */
+    --neutral-950: #F5F7FA;  /* main text */
+    --neutral-600: #A1A7B3;  /* secondary text */
+
+    /* Borders */
+    --neutral-300: #525866;
+
+    /* Buttons */
+    --blue-500: #335CFF;
+
+    /*Divider*/
+    --neutral-200: #232530;
+  }
+   .theme-logo {
+    content: url('../assets/images/wlogo.svg');
+  }
+  .theme-google {
+  content: url('../assets/images/wgoogle.svg');
+}
+}

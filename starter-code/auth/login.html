@@ -13,7 +13,7 @@
 
     <div class="login-card">
       <div class="feather"> 
-        <img src="../assets/images/logo.svg" alt=""/>
+        <img src="../assets/images/logo.svg" alt="" class="theme-logo"/>
       </div>
 
       <div class="welcome">
@@ -26,15 +26,22 @@
         <div class="field-column">
         <label for="email">Email Address</label>
         <input  type="email"id="email" placeholder="email@example.com" />
+        <p class="signup info-text" id="email-error">
+          <!-- <img src="../assets/images/red-info.svg" alt="Info icon" class="info-icon"> -->
+        </p>
        </div>
         
       
       <div class="field-column">
       <div class="field-row">
         <label for="password">Password</label>
-        <a class="forgetlink" href="#">Forgot</a>
+        <a class="forgetlink" href="forgot-password.html">Forgot</a>
       </div>
-      <input type="password" id="password" />
+      <div class="password-wrapper">
+      <input type="password" id="password-new" />
+      <img src="../assets/images/eye hidden.svg" alt="" class="toggle-password" />
+      </div>
+      
       </div>
 
 
@@ -45,7 +52,7 @@
       <div class="other-logs">
         <p class="log-phrase">Or log in with:</p>
 
-      <button class="google-btn"><img src="../assets/images/icon-google.svg" alt=""/>
+      <button class="google-btn"><img src="../assets/images/icon-google.svg" alt="" class="theme-google"/>
         <span class="googleword">Google</span>
       </button>
 
@@ -53,13 +60,14 @@
       <hr class="divider" />
       <div>
         <p class="signup">
-        No account yet? <a class="signuplink" href="#">Sign Up</a>
+        No account yet? <a class="signuplink" href="signup.html">Sign Up</a>
       </p>
       </div>
 
     </div>
 
   </div>
+  <script src="../javascript/auth.js"></script>
 </body>
 
 

@@ -13,7 +13,7 @@
 
     <div class="login-card">
       <div class="feather"> 
-        <img src="../assets/images/logo.svg" alt=""/>
+        <img src="../assets/images/logo.svg" alt="" class="theme-logo"/>
       </div>
 
       <div class="welcome">
@@ -32,29 +32,13 @@
       <div class="field-column">
       <div class="field-row">
         <label for="password">Password</label>
-        
       </div>
-      <input type="password" id="password"/>
+
+      <input type="password" id="password-new"/>
       <p class="signup info-text">
-  <svg
-    class="info-icon"
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-  >
-    <!-- Full circle -->
-    <circle cx="12" cy="12" r="10" />
-    <!-- The vertical line of "i" -->
-    <line x1="12" y1="10" x2="12" y2="16" />
-    <!-- The dot of "i" -->
-    <line x1="12" y1="7" x2="12" y2="7.01" />
-  </svg>
-  At least 8 characters
-</p>
+      <img src="../assets/images/ainfo.svg" alt="Info icon" class="info-icon">
+       At least 8 characters
+      </p>
       </div>
 
 
@@ -65,7 +49,7 @@
       <div class="other-logs">
         <p class="log-phrase">Or log in with:</p>
 
-      <button class="google-btn"><img src="../assets/images/icon-google.svg" alt=""/>
+      <button class="google-btn"><img src="../assets/images/icon-google.svg" alt="" class="theme-google"/>
         <span class="googleword">Google</span>
       </button>
 
@@ -73,7 +57,7 @@
       <hr class="divider" />
       <div>
         <p class="signup">
-        Already have an account? <a class="signuplink" href="#">Login</a>
+        Already have an account? <a class="signuplink" href="login.html">Login</a>
       </p>
       </div>
 
@@ -88,6 +72,6 @@
     </div>
 
   </div>
-  
+  <script src="../javascript/auth.js"></script>
 </body>
 </html>

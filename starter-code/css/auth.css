@@ -1,6 +1,7 @@
 :root {
 
     /* the neutral colors */
+    --on-primary: #ffffff;
     --neutral-0:   #ffffff;
   --neutral-50:  #F5F7FA;
   --neutral-100: #F3F5F8;
@@ -31,6 +32,7 @@
   --radius-md: 0.75rem;
 
   --control-width-mobile:19.4375rem
+  
 }
 
 @font-face {
@@ -81,6 +83,11 @@
     display: flex;
     gap:0.625rem ;
     padding-bottom: 0.5rem;
+    
+}
+/* Default: light mode */
+.theme-logo {
+  content: url('../assets/images/logo.svg');
 }
 .welcome{
  display: flex;
@@ -128,6 +135,16 @@ label{
     font-size: 0.875rem;
     font-weight: 400;
     color: var(--neutral-500);}
+.error-message {
+  color: var(--red-500); /* red color for errors */
+  font-size: 0.75rem;    /* smaller text */
+  margin-top: 0.25rem;   /* space from input */
+  display: block;        /* ensures it’s on a new line */
+  min-height: 1rem;      /* keeps space even when empty */
+}
+input.error {
+  border-color: var(--red-500); /* highlight input in red */
+}
 
 .password{
     font-family: 'Inter';
@@ -152,23 +169,65 @@ input{
     padding: 0.75rem 1rem;
     font-size: 1rem;
     font-family: 'Inter';
+    background: var(--neutral-0);
+    color: var(--neutral-950);
+}
+input:hover{
+    cursor: pointer;
+}
+input:focus{
+    box-shadow: 
+        0 0 0 2px var(--neutral-0),  /* inner border */
+        0 0 0 4px var(--neutral-500);  }
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 2.5rem; /* space for the eye icon */
+  box-sizing: border-box;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem; /* distance from the right edge */
+  transform: translateY(-50%);
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: filter 0.2s;
+}
+
+.toggle-password:hover{
+    cursor: pointer;
 }
 .login-btn{
     width: var(--control-width);
     height: var(--control-height);
-    background: var(--blue-500);
+    background-color: var(--blue-500);
     border-radius: var(--radius-md);
     border: 1px solid var(--neutral-300);
-    color: var(--neutral-0);
-    cursor: pointer;
+    color: var(--on-primary);
     font-family: 'Inter';
     font-size: 1rem;
     font-weight: 600;
 
 
 }
+.login-btn:hover{
+    cursor: pointer;
+}
+.login-btn:focus {
+    outline: none; /* remove default focus outline */
+    box-shadow: 
+        0 0 0 2px var(--neutral-0),  /* inner border */
+        0 0 0 4px var(--neutral-500); /* outer border */
+}
 
-.other-logs{
+  .other-logs{
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -187,6 +246,7 @@ input{
     font-weight: 500;
     color: var(--neutral-950);
 }
+
 .google-btn{
     display: flex;
     align-items: center;
@@ -196,10 +256,21 @@ input{
     height: 3rem;
     border-radius: var(--radius-md);
     border: 1px solid var(--neutral-300);
+    background: var(--neutral-0);  
+}
+
+.google-btn:hover{
     cursor: pointer;
-    background: var(--neutral-0);
-    
-    
+}
+
+.google-btn:focus{
+    outline: none; /* remove default focus outline */
+    box-shadow: 
+        0 0 0 2px var(--neutral-0),  /* inner border */
+        0 0 0 4px var(--neutral-500); /* outer border */  }
+
+.theme-google {
+  content: url('../assets/images/icon-google.svg');
 }
 .divider{
     width: var(--control-width);
@@ -244,6 +315,9 @@ color: var(--neutral-600);
     text-decoration: none;
     color: var(--neutral-950);
 }
+.page {
+  overflow: hidden;
+}
 
 
 
@@ -277,6 +351,32 @@ color: var(--neutral-600);
     text-align: center;
   }
   
+}
+@media (prefers-color-scheme:dark) {
+  :root {
+    /* Backgrounds */
+    --neutral-0:   #0E121B;   /* cards */
+    --neutral-100: #2B303B;   /* page background */
+
+    /* Text */
+    --neutral-950: #F5F7FA;  /* main text */
+    --neutral-600: #A1A7B3;  /* secondary text */
+
+    /* Borders */
+    --neutral-300: #525866;
+
+    /* Buttons */
+    --blue-500: #335CFF;
+
+    /*Divider*/
+    --neutral-200: #232530;
+  }
+   .theme-logo {
+    content: url('../assets/images/wlogo.svg');
+  }
+  .theme-google {
+  content: url('../assets/images/wgoogle.svg');
+}
 }
 
 
