@@ -6,6 +6,9 @@
 
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
   <link rel="stylesheet" href="../css/auth.css">
+  <link rel="stylesheet" href="../css/themes.css">
+
+<script type="module" src="../javascript/boot.js"></script>
   <title>Frontend Mentor | Note-taking web app</title>
 </head>
 <body class="signup-page">
@@ -21,29 +24,29 @@
       <p class="signup">Sign up to start organizing your notes and boost your productivity.</p>
     </div>
 
-      <div class="form"> 
+     <form class="form"> 
 
-        <div class="field-column">
-        <label for="email">Email Address</label>
-        <input  type="email"id="email" placeholder="email@example.com" />
-       </div>
-        
-      
-      <div class="field-column">
-      <div class="field-row">
-        <label for="password">Password</label>
-      </div>
-
-      <input type="password" id="password-new"/>
-      <p class="signup info-text">
+  <div class="field-column">
+    <label for="email">Email Address</label>
+    <input type="email" id="email" placeholder="email@example.com" required />
+  </div>
+  
+  <div class="field-column">
+    <label for="password-new">Password</label>
+    <input type="password" id="password-new" required />
+    <p class="signup info-text">
       <img src="../assets/images/ainfo.svg" alt="Info icon" class="info-icon">
-       At least 8 characters
-      </p>
-      </div>
+      At least 8 characters
+    </p>
+  </div>
 
+  <div class="field-column">
+    <label for="password-confirm">Confirm Password</label>
+    <input type="password" id="password-confirm" required />
+  </div>
 
-      <button class="login-btn">Sign Up</button>
-    </div>
+  <button type="submit" class="login-btn">Sign Up</button>
+</form>
     <hr class="divider" />
 
       <div class="other-logs">
@@ -72,6 +75,6 @@
     </div>
 
   </div>
-  <script src="../javascript/auth.js"></script>
+  <script type="module" src="../javascript/auth.js"></script>
 </body>
 </html>

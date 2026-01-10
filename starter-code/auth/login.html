@@ -6,9 +6,12 @@
 
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
   <link rel="stylesheet" href="../css/auth.css">
+  <link rel="stylesheet" href="../css/themes.css">
+
+<script type="module" src="../javascript/boot.js"></script>
   <title>Frontend Mentor | Note-taking web app</title>
 </head>
-<body>
+<body class="login-page">
   <div class="page">
 
     <div class="login-card">
@@ -21,7 +24,7 @@
       <p class="signup">Please log in to continue</p>
     </div>
 
-      <div class="form"> 
+      <form class="form"> 
 
         <div class="field-column">
         <label for="email">Email Address</label>
@@ -45,8 +48,8 @@
       </div>
 
 
-      <button class="login-btn">Login</button>
-    </div>
+      <button type="submit" class="login-btn">Login</button>
+    </form>
     <hr class="divider" />
 
       <div class="other-logs">
@@ -67,7 +70,7 @@
     </div>
 
   </div>
-  <script src="../javascript/auth.js"></script>
+  <script  type="module" src="../javascript/auth.js"></script>
 </body>
 
 

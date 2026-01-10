@@ -1,121 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./starter-code/assets/images/favicon-32x32.png">
-  <link rel="stylesheet" href="./starter-code/css/styles.css">
-  <title>Frontend Mentor | Note-taking web app</title>
-</head>
-<body>
-  <main>
-  <div class="container">
-<div>
-  <div class="tabapp-logo">
-    <img src="./starter-code/assets/images/logo.svg" alt="App Logo" />
-  </div>
-</div>
-  <div class="sidebar-nav">
-  <!-- Logo Section -->
-  <div class="app-logo">
-    <img src="./starter-code/assets/images/logo.svg" alt="App Logo" />
-  </div>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./starter-code/assets/images/favicon-32x32.png"
+    />
+    <link rel="stylesheet" href="./starter-code/css/styles.css" />
+    <link rel="stylesheet" href="./starter-code/css/themes.css" />
+    <title>Frontend Mentor | Note-taking web app</title>
+  </head>
+  <body>
+    <main>
+      <div class="container">
+        <div>
+          <div class="tabapp-logo">
+            <img src="./starter-code/assets/images/logo.svg" alt="App Logo" />
+          </div>
+        </div>
+        <div class="sidebar-nav">
+          <!-- Logo Section -->
+          <div class="app-logo">
+            <img src="./starter-code/assets/images/logo.svg" alt="App Logo" />
+          </div>
 
-  <!-- Navigation & Tags -->
-  <div class="nav-section">
-    <!-- All Notes / Archive -->
-    <div class="nav-item" id="nav-home">
-  <div class="nav-left">
-    <img src="./starter-code/assets/images/home.svg" alt="Home Icon" />
-    <span>All Notes</span>
-  </div>
+          <!-- Navigation & Tags -->
+          <div class="nav-section">
+            <!-- All Notes / Archive -->
+            <div class="nav-item" id="nav-home">
+              <div class="nav-left">
+                <img
+                  src="./starter-code/assets/images/home.svg"
+                  alt="Home Icon"
+                />
+                <span>All Notes</span>
+              </div>
 
-  <img src="./starter-code/assets/images/icon-arrow-right.svg" alt="Arrow Icon" />
-</div>
+              <img
+                src="./starter-code/assets/images/icon-arrow-right.svg"
+                alt="Arrow Icon"
+              />
+            </div>
 
+            <div class="nav-item" id="nav-archived">
+              <img
+                src="./starter-code/assets/images/archived.svg"
+                alt="Archive Icon"
+              />
+              <span>Archived Notes</span>
+            </div>
 
-    <div class="nav-item" id="nav-archived">
-      <img src="./starter-code/assets/images/archived.svg" alt="Archive Icon" />
-      <span>Archived Notes</span>
+            <hr class="nav-divider" />
+
+            <!-- Tags -->
+            <div class="tags-section"></div>
+          </div>
+        </div>
+
+        <div class="header">
+          <h1>All Notes</h1>
+          <div class="search-container">
+            <div class="search-box">
+              <img
+                src="./starter-code/assets/images/search-icon.svg"
+                alt="Search Icon"
+                class="search-icon"
+              />
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by title, content, or tags…"
+              />
+            </div>
+            <a  href="./starter-code/settings.html">
+              <img
+                src="./starter-code/assets/images/settings.svg"
+                alt="Settings Icon"
+                class="settings-icon"
+              />
+            </a>
+          </div>
+        </div>
+
+        <div class="sidebar-all">
+          <button class="create-note-desktop">+ Create New Note</button>
+
+          <button class="create-note-mobile">
+            <img
+              src="./starter-code/assets/images/wplus.svg"
+              alt="Create Note Icon"
+            />
+          </button>
+
+          <div class="empty-state">
+            <p class="archived-info hidden">
+              All your archived notes are stored here. You can restore or delete
+              them anytime.
+            </p>
+
+            <!-- DYNAMIC EMPTY MESSAGE (used for both All Notes and empty Archived Notes) -->
+            <p class="empty-text">
+              You don’t have any notes yet. Start a new note to capture your
+              thoughts and ideas.
+            </p>
+          </div>
+
+          <div class="notes-list hidden"></div>
+          <hr class="divider" />
+        </div>
+
+        <div class="content"></div>
+
+        <div class="right-menu"></div>
+      </div>
+    </main>
+
+    <div class="tablet-menu-bar">
+      <button id="menu-home">
+        <img
+          src="./starter-code/assets/images/ahome.svg"
+          alt="Home Icon"
+        /><span>Home</span>
+      </button>
+      <button id="menu-create-note">
+        <img
+          src="./starter-code/assets/images/asearch-icon.svg"
+          alt="Search Icon"
+        /><span>Search</span>
+      </button>
+      <button id="menu-archive">
+        <img
+          src="./starter-code/assets/images/aacrhive.svg"
+          alt="Archive Icon"
+        /><span>Archived</span>
+      </button>
+      <button id="menu-tags">
+        <img
+          src="./starter-code/assets/images/atag.svg"
+          alt="Tags Icons"
+        /><span>Tags</span>
+      </button>
+      <button id="menu-settings">
+        <img
+          src="./starter-code/assets/images/asettings.svg"
+          alt="Settings Icon"
+        /><span>Settings</span>
+      </button>
     </div>
 
-    <hr class="nav-divider" />
-
-    <!-- Tags -->
-            <div class="tags-section">
-            
-            </div>
-    
-      </div>
-</div>
-
-
-  <div class="header">
-  <h1>All Notes</h1>
-  <div class="search-container">
-  <div class="search-box">
-    <img src="./starter-code/assets/images/search-icon.svg" alt="Search Icon" class="search-icon" />
-    <input type="text" id="searchInput" placeholder="Search by title, content, or tags…" />
-  </div>
-  <img src="./starter-code/assets/images/settings.svg" alt="Settings Icon" class="settings-icon" />
-</div>
-
-  </div>
-
-  <div class="sidebar-all">
-  <button class="create-note-desktop">
-    
-     + Create New Note</button>
-
-<button class="create-note-mobile">
-  <img src="./starter-code/assets/images/wplus.svg" alt="Create Note Icon">
-</button>
-
-  <div class="empty-state">
-   <p class="archived-info hidden">
-    All your archived notes are stored here. You can restore or delete them anytime.
-  </p>
-
-  <!-- DYNAMIC EMPTY MESSAGE (used for both All Notes and empty Archived Notes) -->
-  <p class="empty-text">
-    You don’t have any notes yet. Start a new note to capture your thoughts and ideas.
-  </p>
-  </div>
-
-  <div class="notes-list hidden"></div>
-  <hr class="divider" />
-</div>
-
-  <div class="content"></div>
-
-  <div class="right-menu"></div>
-</div>
-</main>
- 
-
-  
-
-  
-<div class="tablet-menu-bar">
-  <button id="menu-home"><img src="./starter-code/assets/images/ahome.svg" alt="Home Icon"><span>Home</span></button>
-  <button id="menu-create-note"><img src="./starter-code/assets/images/asearch-icon.svg" alt="Search Icon"><span>Search</span></button>
-  <button id="menu-archive"><img src="./starter-code/assets/images/aacrhive.svg" alt="Archive Icon" /><span>Archived</span></button>
-  <button id="menu-tags"><img src="./starter-code/assets/images/atag.svg" alt="Tags Icons"><span>Tags</span></button>
-  <button id="menu-settings"><img src="./starter-code/assets/images/asettings.svg" alt="Settings Icon"><span>Settings</span></button>
-</div>
-
-  
-
-  
-
-  
-
-  
-<script src="./starter-code/javascript/storage.js"> </script>
-<script src="./starter-code/javascript/noteManager.js"></script>
-<script src="./starter-code/javascript/ui.js"></script>
-<script src="./starter-code/javascript/themes.js"></script>
-<script src="./starter-code/javascript/main.js"></script>
-</body>
+    <script type="module" src="./starter-code/javascript/main.js"></script>
+  </body>
 </html>
