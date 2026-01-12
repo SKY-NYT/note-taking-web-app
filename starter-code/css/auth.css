@@ -87,8 +87,10 @@
 }
 /* Default: light mode */
 .theme-logo {
-  content: url('../assets/images/logo.svg');
+  width: 10rem;
+  height: 2.5rem;
 }
+
 .welcome{
  display: flex;
  flex-direction: column;
@@ -270,7 +272,8 @@ input:focus{
         0 0 0 4px var(--neutral-500); /* outer border */  }
 
 .theme-google {
-  content: url('../assets/images/icon-google.svg');
+  width: 2rem;
+  height: 2rem;
 }
 .divider{
     width: var(--control-width);

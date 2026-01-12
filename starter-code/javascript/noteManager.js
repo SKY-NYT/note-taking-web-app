@@ -2,7 +2,8 @@
 
 export class Note {
   constructor(title = "", content = "", tags = []) {
-    this.id = Date.now().toString();
+    // Better than Date.now() for preventing duplicates
+    this.id = crypto.randomUUID(); 
     this.title = title;
     this.content = content;
     this.tags = tags;
@@ -36,18 +37,19 @@ export const getFilteredNotes = (notes, view, activeTag = null) => {
 };
 
 export const getAllUniqueTags = (notes) => {
-  const tags = notes.flatMap(note => note.tags || []); // Added fallback for safety
+  // Flatmap combines all tag arrays and then Set removes duplicates
+  const tags = notes.flatMap(note => note.tags || []); 
   return [...new Set(tags)];
 };
 
-// PLACE IT HERE
 export const searchNotes = (notes, query) => {
   const q = query.toLowerCase().trim();
   if (!q) return notes; 
 
   return notes.filter(note => {
-    const titleMatch = note.title.toLowerCase().includes(q);
-    const contentMatch = note.content.toLowerCase().includes(q);
+    // Adding || "" prevents errors if title or content are missing
+    const titleMatch = (note.title || "").toLowerCase().includes(q);
+    const contentMatch = (note.content || "").toLowerCase().includes(q);
     const tagMatch = note.tags?.some(tag => tag.toLowerCase().includes(q));
     
     return titleMatch || contentMatch || tagMatch;
