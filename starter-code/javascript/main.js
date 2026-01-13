@@ -98,7 +98,7 @@ return;
     }    // --- URL REDIRECT LOGIC ENDS HERE ---
 }
 
-// 5. SEARCH LOGIC
+
 // 5. SEARCH LOGIC
 function setupSearch() {
     const searchInput = document.getElementById("searchInput");

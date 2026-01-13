@@ -2,7 +2,7 @@
 
 export class Note {
   constructor(title = "", content = "", tags = []) {
-    // Better than Date.now() for preventing duplicates
+  
     this.id = crypto.randomUUID(); 
     this.title = title;
     this.content = content;

@@ -39,7 +39,7 @@ export const updateHeader = (state, tagName = "") => {
         return;
     }
 
-    // ... rest of your existing logic (Section 2B, 3, 4) ...
+  
 
 
     // 2B. TABLET SEARCH NAVIGATION LOGIC
