@@ -202,7 +202,7 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
 
     contentArea.querySelector(".btn-save").addEventListener("click", () => {
         const title = document.getElementById("edit-title").value;
-        const content = document.getElementById("edit-content").value;
+        const content = document.getElementById("edit-content").innerHTML;
         const tags = document.getElementById("edit-tags").value
             .split(",")
             .map(t => t.trim())
