@@ -485,6 +485,9 @@ flex-direction: column;
 .tablet-menu-bar, .tabapp-logo, .create-note-mobile {
   display: none;
 }
+.back-to-menu{
+    display: none;
+  }
 
 /* Tablet: 481px to 1024px */
 @media (min-width: 481px) and (max-width: 1024px) {
@@ -733,110 +736,260 @@ body.setting-selected .main-content {
     display: block !important;
   }
   
+  .back-to-menu{
+    display: block;
+  }
 }
 
 
 /* Mobile: 0px to 480px */
 @media (max-width: 480px) {
-  .container {
-    display: block;
-    width: 100%;
-    padding: 0;
+   .container {
+    display: block; /* stacked for tablet */
   }
-  .create-note-desktop {
+.create-note-desktop {
     display: none;
   }
   .sidebar-all {                  /* Figma height */                      /* spacing between items */
-  padding: 0rem 1rem 2rem 2rem;}
-
-.tabapp-logo {
-    display: block; /* visible on mobile */
-    display: flex;               /* layout for logo content */
-  align-items: center;         /* vertically center items */
-  gap: 1rem;                   /* spacing between inner elements */
-  background-color:var(--neutral-100);             /* fixed height */
-  padding: 1rem
-  }
-  .header {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border:none;
-  }
-
-  .content {
-    width: 100%;
-    height: calc(100vh - 54px - 56px); 
-    padding: 1rem;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    overflow-y: auto;
-  }
-.empty-state{
-  display: flex;
-  background-color: var(--neutral-100);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--neutral-200);
-  padding: 0.5rem ;
-
+  padding: 0rem 1rem 2rem 2rem;    /* top/right/bottom/left -> spacing/250, spacing/200, spacing/250, spacing/400 */
+ 
+  
 }
-  .sidebar-nav,
-  .right-menu,.search-container,.content {
-    display: none; /* hide desktop sidebars */
-  }
-
-  .tablet-menu-bar {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 100;
-    width: 100%;
-    height: 0.5rem;
-    justify-content: space-between;
-    border:none;
-    padding: 2rem 2rem;
-    border-top: 1px solid var(--neutral-200);
-  }
-  .tablet-menu-bar button {
-  background: transparent;   /* remove background */
-  border: none;               /* remove border */
-  padding: 0;                 /* remove extra space */
-  margin: 0;
-  cursor: pointer;
-  outline: none;
-  display: flex;
-  flex-direction: column;   /*  icon on top, text below */
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;  
-  color: var(--neutral-500);
-}
-.tablet-menu-bar button span {
-  display: none;
-}
-  .tablet-menu-bar button:hover,
-.tablet-menu-bar button.active {
-  color: var(--blue-500);
-}
-.create-note-mobile {
+  .create-note-mobile {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2rem;         /* circular size */
-    height: 2rem;
+    width: 4rem;         /* circular size */
+    height: 4rem;
     border-radius: 50%;
     border: 1px solid var(--blue-500);
     background-color: var(--blue-500);
     position: fixed;        /* floating button */
-    bottom: 5.5rem;
+    bottom: 6.5rem;
     right: 1.5rem;
     z-index: 100;
     padding: 0;             /* no extra padding */
     
   box-shadow: 0px 7px 11px rgba(202, 207, 216, 0.7);
   }
-  .create-note-mobile img {
-    width: 1.125rem;
-    height: 1.125rem;
+
+
+  .tab-header{
+    background: var(--neutral-100);
+  }
+  .tabapp-logo {
+  display: flex;               /* layout for logo content */
+  align-items: center;         /* vertically center items */
+  gap: 1rem;                   /* spacing between inner elements */
+  background-color:var(--neutral-100);             /* fixed height */
+  padding: 2rem 2rem;
+  width: 10rem;
+  height: 2rem;          /* top/bottom 2rem, left/right 4rem */
+      /* angle 0 */
+       /* include padding in width */
+}
+  .header {
+    width: 100%;
+    padding: 1rem 2rem; /* adjust for tablet spacing */
+    border:none;
+  }
+  .divider {
+    display: block;
+    height: 1px;
+    background: var(--neutral-100);
+    
+  }
+
+  .content {
+    width: 100%;
+    padding: 2rem 2rem;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+  }
+
+  /* Hide desktop sidebars */
+  .sidebar-nav,
+  .right-menu,.search-container{
+    display: none;
+  }
+
+  /* --- ADD THIS RIGHT BELOW IT --- */
+/* This ensures the area holding your options is visible ONLY when picked */
+.main-content, .content {
+    display: none; 
+}
+body.setting-selected .content, 
+body.setting-selected .main-content {
+    display: block !important;
+    width: 100%;
+}
+.tabapp-logo {
+    display: block; /* visible on tablet */
+    
+  }
+  .tabapp-logo {
+  display: flex;               /* layout for logo content */
+  align-items: center;         /* vertically center items */
+  gap: 1rem;                   /* spacing between inner elements */
+  background-color:var(--neutral-100);             /* fixed height */
+  padding: 2rem 2rem;          /* top/bottom 2rem, left/right 4rem */
+      /* angle 0 */
+       /* include padding in width */
+}
+  .tablet-menu-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4.5rem; /* Increased height to fit icon + text comfortably */
+    background-color: var(--neutral-000); /* Use white/background color */
+    justify-content: space-around; /* Spreads buttons evenly */
+    align-items: center;
+    border-top: 1px solid var(--neutral-200);
+    padding: 0.5rem 1rem;
+    z-index: 1000;
+  }
+  .tablet-menu-bar button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    color: var(--neutral-600);
+    transition: all 0.2s ease;
+    width: 20%; /* Even width for all 5 buttons */
+    text-decoration: none; /* For the link inside Settings */
+  }
+
+  .tablet-menu-bar button a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .tablet-menu-bar a{
+    display: flex;
+     flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color:var(--neutral-950);
+  }
+
+  /* Icon Scaling */
+  .micon {
+    width: 1.5rem;
+    height: 1.5rem;
+    stroke: currentColor;
+    fill: none; /* Most icons use stroke */
+    stroke-width: 2;
+  }
+  /* Label Styling */
+  .tablet-menu-bar button span {
+    font-size: var(--text-xs); /* Use your small text variable */
+    font-weight: 500;
+  }
+/* Active/Hover State */
+  .tablet-menu-bar button:hover,
+  .tablet-menu-bar button.active {
+    color: var(--blue-500);
+    background-color: var(--blue-50); /* Subtle highlight */
+    border-radius: var(--radius-sm);
+  }
+
+  /* Ensure sidebar-all is the main container for the replacement view */
+  .sidebar-all {
+    padding: 0rem 1rem 2rem 2rem;
+    min-height: calc(100vh - 10rem); /* Give it enough room to breathe */
+  }
+
+  /* 1. HIDE the main settings menu list when an option is selected */
+  body.setting-selected .settings-menu {
+    display: none;
+  }
+
+  /* 2. SHOW the specific content panel when selected */
+  /* We use !important only if your inline 'display:none' in HTML is stubborn */
+  body.setting-selected .settings-content {
+    display: block !important;
+    animation: fadeIn 0.3s ease;
+  }
+
+  /* 3. Style the Content Panels to look good in the sidebar area */
+  .settings-content {
+    width: 100%;
+  }
+
+  .header-content {
+    font-size: var(--text-xl);
+    margin-bottom: 0.5rem;
+    color: var(--neutral-950);
+  }
+
+  .para-content {
+    font-size: var(--text-md);
+    color: var(--neutral-600);
+    margin-bottom: 2rem;
+  }
+
+  /* 4. Formatting the Radio Option 'Cards' */
+  .color-option label, .font-option label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-md);
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  /* Highlight card when radio is checked */
+  .color-option label:has(input:checked),
+  .font-option label:has(input:checked) {
+    background-color: var(--blue-50);
+    border-color: var(--blue-500);
+  }
+
+  /* Move radio input to the far right */
+  .color-option input, .font-option input {
+    margin-left: auto;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  /* Ensure sidebar-all is the main container */
+  .sidebar-all {
+    padding: 0rem 1rem 2rem 2rem;
+    min-height: calc(100vh - 10rem);
+  }
+
+  /* 1. HIDE the menu list when an option is selected */
+  body.setting-selected .settings-menu,
+  body.setting-selected .sidebar-all > h1, 
+  body.setting-selected .sidebar-all > .nav-items { 
+    display: none !important; 
+  }
+
+  /* 2. SHOW the specific content panel */
+  body.setting-selected .settings-content {
+    display: block !important;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  /* 3. Ensure the parent container is also visible */
+  body.setting-selected .main-content {
+    display: block !important;
+  }
+  
+  .back-to-menu{
+    display: block;
   }
 }
