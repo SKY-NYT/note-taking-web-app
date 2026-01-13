@@ -657,7 +657,7 @@ body.setting-selected .main-content {
   }
 
   /* 1. HIDE the main settings menu list when an option is selected */
-  body.setting-selected .settings-menu {
+  body.setting-selected .settings-menu  .tablet-menu-bar{
     display: none;
   }
 
@@ -954,8 +954,6 @@ body.setting-selected .main-content {
   .back-to-menu {
     display: block;
   }
-}
-/* SHOW the bottom menu bar on mobile */
   .tablet-menu-bar {
     display: flex !important;
     position: fixed;
@@ -970,3 +968,6 @@ body.setting-selected .main-content {
     padding: 0.5rem 1rem;
     z-index: 1000;
   }
+}
+/* SHOW the bottom menu bar on mobile */
+  
