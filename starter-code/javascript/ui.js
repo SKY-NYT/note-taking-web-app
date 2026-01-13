@@ -1,4 +1,5 @@
 // ui.js
+import { exportNotesToJSON, validateAndImportNotes } from './storage.js';
 
 // 1. HELPER: Clear areas before re-rendering
 export const clearUI = () => {
@@ -178,14 +179,26 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
                 </div>
             </div>
         </div>
-        <hr class="meta-divider" />
-        <textarea id="edit-content" placeholder="Start typing...">${note.content}</textarea>
-        <hr class="meta-divider" />
+        <hr class="meta-divider" /><div class="toolbar">
+            <button type="button" class="tool-btn" data-command="bold"><b>B</b></button>
+            <button type="button" class="tool-btn" data-command="italic"><i>I</i></button>
+            <button type="button" class="tool-btn" data-command="insertUnorderedList">• List</button>
+        </div>
+
+        <div id="edit-content" contenteditable="true" class="rich-editor">${note.content}</div><hr class="meta-divider" />
         <div class="editor-footer">
             <button class="btn-save">Save Note</button>
             <button class="btn-cancel">Cancel</button>
         </div>
     `;
+    // TOOLBAR LOGIC
+    contentArea.querySelectorAll(".tool-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const command = btn.getAttribute("data-command");
+            document.execCommand(command, false, null);
+            document.getElementById("edit-content").focus();
+        });
+    });
 
     contentArea.querySelector(".btn-save").addEventListener("click", () => {
         const title = document.getElementById("edit-title").value;
@@ -315,4 +328,46 @@ const renderNoteTemplate = (note) => {
         </div>
         <hr class="meta-divider" />
     `;
+};
+// 8. DATA MANAGEMENT: Export/Import functionality
+export const setupExportImportListeners = (noteManager) => {
+    const exportBtn = document.getElementById('export-notes-btn');
+    const importInput = document.getElementById('import-notes-input');
+
+    if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+            // Note: In your main.js we passed a bridge object, so we access .notes
+            const allNotes = noteManager.notes; 
+            exportNotesToJSON(allNotes);
+        });
+    }
+
+    if (importInput) {
+        importInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const imported = validateAndImportNotes(event.target.result);
+                if (imported) {
+                    if (confirm("Import these notes? Existing notes will be kept.")) {
+                        // Merge notes
+                        const combinedNotes = [...noteManager.notes, ...imported];
+                        
+                        // Update the bridge object (which updates allNotes in main.js)
+                        noteManager.notes = combinedNotes;
+                        
+                        // Save and Refresh
+                        
+                        saveNotes(combinedNotes);
+                        window.location.reload(); 
+                    }
+                } else {
+                    alert("Invalid JSON file.");
+                }
+            };
+            reader.readAsText(file);
+        });
+    }
 };
