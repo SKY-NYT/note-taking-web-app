@@ -25,6 +25,16 @@ export class Note {
 }
 
 // --- HELPER FUNCTIONS ---
+export const generateShareLink = (note) => {
+    const baseUrl = window.location.origin + window.location.pathname;
+    const payload = {
+        t: note.title,
+        c: note.content
+    };
+    // Encode to Base64 to keep the URL clean
+    const encodedData = btoa(encodeURIComponent(JSON.stringify(payload)));
+    return `${baseUrl}?share=${encodedData}`;
+};
 
 export const getFilteredNotes = (notes, view, activeTag = null) => {
   if (view === 'archived') {
