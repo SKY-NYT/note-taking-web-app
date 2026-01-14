@@ -1,5 +1,4 @@
 // ui.js
-import { exportNotesToJSON, validateAndImportNotes } from './storage.js';
 
 // 1. HELPER: Clear areas before re-rendering
 export const clearUI = () => {
@@ -196,38 +195,18 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
                 </div>
             </div>
         </div>
-        <hr class="meta-divider" /><div class="toolbar">
-            <button type="button" class="tool-btn" data-command="bold"><b>B</b></button>
-            <button type="button" class="tool-btn" data-command="italic"><i>I</i></button>
-            <button type="button" class="tool-btn" data-command="insertUnorderedList">• List</button>
-        </div>
-
-        <div id="edit-content" contenteditable="true" class="rich-editor">${note.content}</div><hr class="meta-divider" />
+        <hr class="meta-divider" />
+        <textarea id="edit-content" placeholder="Start typing...">${note.content}</textarea>
+        <hr class="meta-divider" />
         <div class="editor-footer">
             <button class="btn-save">Save Note</button>
             <button class="btn-cancel">Cancel</button>
         </div>
     `;
-    // TOOLBAR LOGIC
-    contentArea.querySelectorAll(".tool-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-            const command = btn.getAttribute("data-command");
-            document.execCommand(command, false, null);
-            document.getElementById("edit-content").focus();
-        });
-    });
-
-    // --- NEW: PERSISTENCE LISTENERS ---
-    const inputs = ["edit-title", "edit-content", "edit-tags"];
-    inputs.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener("input", () => saveDraftToLocal(note.id));
-    });
 
     contentArea.querySelector(".btn-save").addEventListener("click", () => {
-        localStorage.removeItem("note_draft");
         const title = document.getElementById("edit-title").value;
-        const content = document.getElementById("edit-content").innerHTML;
+        const content = document.getElementById("edit-content").value;
         const tags = document.getElementById("edit-tags").value
             .split(",")
             .map(t => t.trim())
@@ -236,13 +215,8 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
         onSave({ title, content, tags });
     });
 
-    contentArea.querySelector(".btn-cancel").addEventListener("click", () => {
-        localStorage.removeItem("note_draft"); // Clear draft on cancel
-        onCancel();
-    });
-
+    contentArea.querySelector(".btn-cancel").addEventListener("click", onCancel);
 };
-
 // 4B. Tablet/Mobile version
 export const renderTabletNoteEditor = (note, actions) => {
     const contentArea = document.querySelector(".content");
@@ -281,23 +255,15 @@ export const renderTabletNoteEditor = (note, actions) => {
             <textarea id="edit-content" placeholder="Start typing...">${note.content}</textarea>
         </div>
     `;
- // --- NEW: PERSISTENCE LISTENERS ---
-    const inputs = ["edit-title", "edit-content", "edit-tags"];
-    inputs.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener("input", () => saveDraftToLocal(note.id));
-    });
+
     // Listeners
     contentArea.querySelector("#share-note-btn-mobile").addEventListener("click", () => handleShareClick(note));
     contentArea.querySelector(".btn-back-to-list").addEventListener("click", actions.onBack);
     contentArea.querySelector(".delete-note").addEventListener("click", actions.onDelete);
     contentArea.querySelector(".archive-note").addEventListener("click", actions.onArchive);
-   contentArea.querySelector(".btn-cancel").addEventListener("click", () => {
-        localStorage.removeItem("note_draft"); // Clear draft
-        actions.onBack();
-    });
+    contentArea.querySelector(".btn-cancel").addEventListener("click", actions.onBack);
     contentArea.querySelector(".btn-save").addEventListener("click", () => {
-        localStorage.removeItem("note_draft");    const updated = {
+        const updated = {
             title: document.getElementById("edit-title").value,
             content: document.getElementById("edit-content").value,
             tags: document.getElementById("edit-tags").value.split(',').map(t => t.trim()).filter(t => t)

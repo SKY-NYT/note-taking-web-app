@@ -208,7 +208,7 @@
               <span>Change Password</span>
             </div>
 
-            <div class="settings-item" id="data-management-menu">
+            <div class="settings-item" id="data-management">
       <svg class="icon">
         <use href="#icon-info"></use>
       </svg>
@@ -376,16 +376,27 @@
 
 
 </div>
-<div class="settings-content" id="change-password-content">
-  </div>
-
 <div class="settings-content" id="data-management-content" style="display: none;">
   <button class="back-to-menu" style="background:none; border:none; color:var(--blue-500); cursor:pointer; margin-bottom:1rem;">
     &larr; Back to Settings
   </button>
   <h2 class="header-content">Data Management</h2>
-  <p class="para-content">Manage your notes data, export, or reset your account.</p>
+  <p class="para-content">Manage your notes data, export, or restore from backup.</p>
+  
+  <div class="btn-group" style="display: flex; gap: 1rem; margin-top: 1rem;">
+    <button id="export-notes-btn" class="apply-color">Export  Notes </button>
+    
+    <input type="file" id="import-notes-input" accept=".json" style="display: none;" />
+    <button id="import-notes-trigger" class="apply-font" style="background-color: var(--neutral-100); color: var(--neutral-900);">
+      Import Notes
+    </button>
+  </div>
 </div>
+        </div>
+
+
+
+
 
 <div class="tablet-menu-bar">
   <a href="../index.html" class="menu-btn" id="menu-home">
@@ -412,6 +423,7 @@
     <svg class="micon"><use href="#icon-settings"></use></svg>
     <span>Settings</span>
   </a>
-</div>    <script type="module" src="./javascript/settings-panel.js"></script>
+</div>  
+  <script type="module" src="./javascript/settings-panel.js"></script>
   </body>
 </html>

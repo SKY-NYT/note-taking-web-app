@@ -50,7 +50,8 @@ return;
     refreshSidebar();
 
     // 4. DEFAULT VIEW: All Notes
-    
+    const activeNotes = allNotes.filter(n => !n.isArchived);
+    ui.renderAllNotes(activeNotes, appState); 
 
     // 5. ATTACH EVENT LISTENERS
     setupNavigation();
@@ -63,30 +64,6 @@ return;
     
     // 6. DEFAULT HEADER
     ui.updateHeader(appState);
-    const activeNotes = allNotes.filter(n => !n.isArchived);
-    ui.renderAllNotes(activeNotes, appState); 
-    
-    // --- INSERT NEW DRAFT RECOVERY LOGIC HERE ---
-    const savedDraft = localStorage.getItem("note_draft");
-
-    if (savedDraft) {
-        const draftData = JSON.parse(savedDraft);
-        
-        // Find the original note reference in our master list
-        const noteToRestore = allNotes.find(n => n.id === draftData.id);
-
-        if (noteToRestore) {
-            // Update the object in memory with the unsaved draft content
-            noteToRestore.title = draftData.title;
-            noteToRestore.content = draftData.content;
-            noteToRestore.tags = draftData.tags.split(',').map(t => t.trim()).filter(t => t);
-            
-            // Open it in the editor immediately
-            openNoteInEditor(noteToRestore);
-            
-            console.log("Recovered unsaved draft for note:", noteToRestore.id);
-        }
-    }
 
     // --- 7. URL REDIRECT LOGIC ---
     const urlParams = new URLSearchParams(window.location.search);
