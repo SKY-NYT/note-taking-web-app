@@ -6,6 +6,23 @@ export const clearUI = () => {
     document.querySelector(".right-menu").innerHTML = "";
     document.querySelector(".notes-list").innerHTML = "";
 };
+// HELPER: Saves current editor state to localStorage
+const saveDraftToLocal = (id) => {
+    const titleEl = document.getElementById("edit-title");
+    const contentEl = document.getElementById("edit-content");
+    const tagsEl = document.getElementById("edit-tags");
+
+    if (!titleEl || !contentEl) return;
+
+    const draft = {
+        id: id,
+        title: titleEl.value,
+        content: contentEl.value,
+        tags: tagsEl.value,
+        lastEdited: new Date().toISOString()
+    };
+    localStorage.setItem("note_draft", JSON.stringify(draft));
+};
 // 2. HEADER: Updates title and element visibility based on current section & search
 export const updateHeader = (state, tagName = "") => {
     const header = document.querySelector(".header");
@@ -187,7 +204,15 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
         </div>
     `;
 
+    // --- NEW: PERSISTENCE LISTENERS ---
+    const inputs = ["edit-title", "edit-content", "edit-tags"];
+    inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("input", () => saveDraftToLocal(note.id));
+    });
+
     contentArea.querySelector(".btn-save").addEventListener("click", () => {
+        localStorage.removeItem("note_draft");
         const title = document.getElementById("edit-title").value;
         const content = document.getElementById("edit-content").value;
         const tags = document.getElementById("edit-tags").value
@@ -198,8 +223,13 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
         onSave({ title, content, tags });
     });
 
-    contentArea.querySelector(".btn-cancel").addEventListener("click", onCancel);
+    contentArea.querySelector(".btn-cancel").addEventListener("click", () => {
+        localStorage.removeItem("note_draft"); // Clear draft on cancel
+        onCancel();
+    });
+
 };
+
 // 4B. Tablet/Mobile version
 export const renderTabletNoteEditor = (note, actions) => {
     const contentArea = document.querySelector(".content");
@@ -238,15 +268,23 @@ export const renderTabletNoteEditor = (note, actions) => {
             <textarea id="edit-content" placeholder="Start typing...">${note.content}</textarea>
         </div>
     `;
-
+ // --- NEW: PERSISTENCE LISTENERS ---
+    const inputs = ["edit-title", "edit-content", "edit-tags"];
+    inputs.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("input", () => saveDraftToLocal(note.id));
+    });
     // Listeners
     contentArea.querySelector("#share-note-btn-mobile").addEventListener("click", () => handleShareClick(note));
     contentArea.querySelector(".btn-back-to-list").addEventListener("click", actions.onBack);
     contentArea.querySelector(".delete-note").addEventListener("click", actions.onDelete);
     contentArea.querySelector(".archive-note").addEventListener("click", actions.onArchive);
-    contentArea.querySelector(".btn-cancel").addEventListener("click", actions.onBack);
+   contentArea.querySelector(".btn-cancel").addEventListener("click", () => {
+        localStorage.removeItem("note_draft"); // Clear draft
+        actions.onBack();
+    });
     contentArea.querySelector(".btn-save").addEventListener("click", () => {
-        const updated = {
+        localStorage.removeItem("note_draft");    const updated = {
             title: document.getElementById("edit-title").value,
             content: document.getElementById("edit-content").value,
             tags: document.getElementById("edit-tags").value.split(',').map(t => t.trim()).filter(t => t)
