@@ -1026,7 +1026,7 @@ body.setting-selected .settings-content.active {
   }
 
   /* Show the panel content */
-  body.setting-selected .main-content {
+  body.setting-selected .main-content{
     display: block !important;
     padding: 1rem;
     margin-top: 0;
@@ -1048,6 +1048,8 @@ body.setting-selected .settings-content.active {
   .btn-placement button {
     width: 100%;
   }
+
+
 }
 /* SHOW the bottom menu bar on mobile */
   
