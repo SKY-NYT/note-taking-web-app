@@ -576,6 +576,8 @@ body.setting-selected .main-content {
     display: block !important;
     width: 100%;
 }
+
+
 .tabapp-logo {
     display: block; /* visible on tablet */
     
@@ -669,12 +671,18 @@ body.setting-selected .main-content {
     display: none;
   }
 
-  /* 2. SHOW the specific content panel when selected */
-  /* We use !important only if your inline 'display:none' in HTML is stubborn */
+  
   body.setting-selected .settings-content {
+    display:none;
+    
+  }
+  /* ONLY show the one that has the style/class applied by your JS */
+body.setting-selected .settings-content[style*="display: block"],
+body.setting-selected .settings-content.active {
     display: block !important;
     animation: fadeIn 0.3s ease;
-  }
+}
+
 
   /* 3. Style the Content Panels to look good in the sidebar area */
   .settings-content {
@@ -734,10 +742,7 @@ body.setting-selected .main-content {
   }
 
   /* 2. SHOW the specific content panel */
-  body.setting-selected .settings-content {
-    display: block !important;
-    animation: fadeIn 0.3s ease;
-  }
+
   
   /* 3. Ensure the parent container is also visible */
   body.setting-selected .main-content {
@@ -776,6 +781,17 @@ body.setting-selected .settings-menu {
     margin-right: 0; /* Remove that huge 15rem margin */
     flex: 1;
 }
+/* When a setting is selected, hide the menu list */
+  body.setting-selected .sidebar-all {
+    display: none !important;
+  }
+
+  /* When a setting is selected, show the main-content area where the panels live */
+  body.setting-selected .main-content {
+    display: block !important;
+    width: 100%;
+    padding: 1.5rem;
+  }
 }
 
 /* Mobile: 0px to 480px */
@@ -922,9 +938,14 @@ body.setting-selected .settings-menu {
   }
 
   body.setting-selected .settings-content {
+    display:none;
+  }
+  /* ONLY show the one that has the style/class applied by your JS */
+body.setting-selected .settings-content[style*="display: block"],
+body.setting-selected .settings-content.active {
     display: block !important;
     animation: fadeIn 0.3s ease;
-  }
+}
 
   .settings-content {
     width: 100%;
@@ -968,11 +989,7 @@ body.setting-selected .settings-menu {
     height: 1.2rem;
   }
 
-  body.setting-selected .settings-menu,
-  body.setting-selected .sidebar-all > h1,
-  body.setting-selected .sidebar-all > .nav-items {
-    display: none !important;
-  }
+ 
 
   body.setting-selected .main-content {
     display: block !important;
@@ -1002,6 +1019,34 @@ body.setting-selected .settings-menu {
   button, 
   .settings-content label {
     font-size: 14px !important;
+  }
+  /* Hide the list of menu items */
+  body.setting-selected .sidebar-all {
+    display: none !important;
+  }
+
+  /* Show the panel content */
+  body.setting-selected .main-content {
+    display: block !important;
+    padding: 1rem;
+    margin-top: 0;
+  }
+
+  /* Ensure the panels take up full width and aren't squashed */
+  .settings-content {
+    padding: 0.5rem;
+    max-width: 100%;
+  }
+
+  /* Fix the 'Apply' buttons to fit mobile width */
+  .btn-placement {
+    width: 100% !important;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .btn-placement button {
+    width: 100%;
   }
 }
 /* SHOW the bottom menu bar on mobile */
