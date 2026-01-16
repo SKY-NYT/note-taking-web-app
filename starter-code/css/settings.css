@@ -486,7 +486,7 @@ flex-direction: column;
   display: none;
 }
 .back-to-menu{
-    display: none;
+    display: none!important;
 
   }
   
