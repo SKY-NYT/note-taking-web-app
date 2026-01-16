@@ -191,7 +191,7 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
                 <div class="meta-row">
                     <svg class="aicon"><use href="#icon-clock"></use></svg>
                     <span>Last Edited:</span>
-                    <span class="read-only-date">${new Date(note.lastEdited).toLocaleDateString()}</span>
+                    <span class="read-only-date">${new Date(note.lastEdited).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
                 </div>
             </div>
         </div>

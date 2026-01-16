@@ -381,11 +381,21 @@ textarea::-webkit-scrollbar {
   display: none;
 }
 
-.editor-footer{
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+
+
+.editor-toolbar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 5px;
 }
+
+.editor-toolbar button {
+    padding: 4px 8px;
+    font-weight: bold;
+    cursor: pointer;
+    border:none
+}
+
 
 .btn-save{
   width: 99px;
