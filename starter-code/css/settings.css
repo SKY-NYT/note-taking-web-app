@@ -486,9 +486,10 @@ flex-direction: column;
   display: none;
 }
 .back-to-menu{
-    display: none!important;
+    display: none !important;
 
   }
+  
   
 
   
@@ -792,6 +793,9 @@ body.setting-selected .settings-menu {
     width: 100%;
     padding: 1.5rem;
   }
+  .back-to-menu {
+    display: flex !important; /* Forces it to show on smaller screens */
+  }
 }
 
 /* Mobile: 0px to 480px */
@@ -800,6 +804,9 @@ body.setting-selected .settings-menu {
     display: block; /* stacked for mobile */
   }
 
+  .back-to-menu {
+    display: flex !important; /* Forces it to show on smaller screens */
+  }
   
   .create-note-desktop {
     display: none;
