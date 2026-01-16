@@ -485,6 +485,14 @@ flex-direction: column;
 .tablet-menu-bar, .tabapp-logo, .create-note-mobile {
   display: none;
 }
+.back-to-menu{
+    display: none !important;
+
+  }
+  
+  
+
+  
 
 /* Tablet: 481px to 1024px */
 @media (min-width: 481px) and (max-width: 1024px) {
@@ -498,7 +506,9 @@ flex-direction: column;
   padding: 0rem 1rem 2rem 2rem;    /* top/right/bottom/left -> spacing/250, spacing/200, spacing/250, spacing/400 */
  
   
+  
 }
+
   .create-note-mobile {
     display: flex;
     align-items: center;
@@ -557,7 +567,7 @@ flex-direction: column;
     display: none;
   }
 
-  /* --- ADD THIS RIGHT BELOW IT --- */
+
 /* This ensures the area holding your options is visible ONLY when picked */
 .main-content, .content {
     display: none; 
@@ -567,6 +577,8 @@ body.setting-selected .main-content {
     display: block !important;
     width: 100%;
 }
+
+
 .tabapp-logo {
     display: block; /* visible on tablet */
     
@@ -586,6 +598,8 @@ body.setting-selected .main-content {
     bottom: 0;
     left: 0;
     width: 100%;
+    /* FIX 2: Ensure it sits on top of everything else */
+  z-index: 1000;
     height: 4.5rem; /* Increased height to fit icon + text comfortably */
     background-color: var(--neutral-000); /* Use white/background color */
     justify-content: space-around; /* Spreads buttons evenly */
@@ -654,16 +668,22 @@ body.setting-selected .main-content {
   }
 
   /* 1. HIDE the main settings menu list when an option is selected */
-  body.setting-selected .settings-menu {
+  body.setting-selected .settings-menu  .tablet-menu-bar{
     display: none;
   }
 
-  /* 2. SHOW the specific content panel when selected */
-  /* We use !important only if your inline 'display:none' in HTML is stubborn */
+  
   body.setting-selected .settings-content {
+    display:none;
+    
+  }
+  /* ONLY show the one that has the style/class applied by your JS */
+body.setting-selected .settings-content[style*="display: block"],
+body.setting-selected .settings-content.active {
     display: block !important;
     animation: fadeIn 0.3s ease;
-  }
+}
+
 
   /* 3. Style the Content Panels to look good in the sidebar area */
   .settings-content {
@@ -723,65 +743,127 @@ body.setting-selected .main-content {
   }
 
   /* 2. SHOW the specific content panel */
-  body.setting-selected .settings-content {
-    display: block !important;
-    animation: fadeIn 0.3s ease;
-  }
+
   
   /* 3. Ensure the parent container is also visible */
   body.setting-selected .main-content {
     display: block !important;
   }
   
+  .back-to-menu{
+    display: block;
+  }
+  /* Ensure the sidebar-all takes up the full view when something is selected */
+body.setting-selected .sidebar-all {
+    width: 100%;
+    padding: 1rem;
 }
 
+/* Hide the main-content entirely on tablet if you want it to show in the sidebar area */
+/* Instead, we make the settings-content behave as if it's the only thing there */
+body.setting-selected .main-content {
+    display: block !important;
+    padding: 1rem;
+    width: 100%;
+}
+
+/* Ensure the menu disappears so the content takes its place */
+body.setting-selected .settings-menu {
+    display: none !important;
+}
+
+/* Adjust the width of your options so they don't overflow on smaller screens */
+.color-option, .font-option, .password-wrapper, .password-option input, .btn-placement {
+    width: 100% !important;
+    max-width: 100%;
+}
+
+.option-text {
+    margin-right: 0; /* Remove that huge 15rem margin */
+    flex: 1;
+}
+/* When a setting is selected, hide the menu list */
+  body.setting-selected .sidebar-all {
+    display: none !important;
+  }
+
+  /* When a setting is selected, show the main-content area where the panels live */
+  body.setting-selected .main-content {
+    display: block !important;
+    width: 100%;
+    padding: 1.5rem;
+  }
+  .back-to-menu {
+    display: flex !important; /* Forces it to show on smaller screens */
+  }
+}
 
 /* Mobile: 0px to 480px */
 @media (max-width: 480px) {
   .container {
-    display: block;
-    width: 100%;
-    padding: 0;
+    display: block; /* stacked for mobile */
   }
+
+  .back-to-menu {
+    display: flex !important; /* Forces it to show on smaller screens */
+  }
+  
   .create-note-desktop {
     display: none;
   }
-  .sidebar-all {                  /* Figma height */                      /* spacing between items */
-  padding: 0rem 1rem 2rem 2rem;}
 
-.tabapp-logo {
-    display: block; /* visible on mobile */
-    display: flex;               /* layout for logo content */
-  align-items: center;         /* vertically center items */
-  gap: 1rem;                   /* spacing between inner elements */
-  background-color:var(--neutral-100);             /* fixed height */
-  padding: 1rem
+
+  .tab-header {
+    background: var(--neutral-100);
   }
+
+  .tabapp-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--neutral-100);
+    padding:  1rem;
+    width: 8rem;
+    height: 2rem;
+  }
+
   .header {
     width: 100%;
-    padding: 0.75rem 1rem;
-    border:none;
+    padding: 0.5rem 1rem;
+   display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: none;
+  }
+
+  .divider {
+    display: block;
+    height: 1px;
+    background: var(--neutral-100);
   }
 
   .content {
     width: 100%;
-    height: calc(100vh - 54px - 56px); 
-    padding: 1rem;
-    border-top-left-radius: 0.5rem;
-    border-top-right-radius: 0.5rem;
-    overflow-y: auto;
+    padding: 2rem 2rem;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
   }
-.empty-state{
-  display: flex;
-  background-color: var(--neutral-100);
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--neutral-200);
-  padding: 0.5rem ;
 
-}
   .sidebar-nav,
-  .right-menu,.search-container,.content {
-    display: none; /* hide desktop sidebars */
+  .right-menu,
+  .search-container {
+    display: none;
+  }
+
+  .main-content,
+  .content {
+    display: none;
+  }
+
+  body.setting-selected .content,
+  body.setting-selected .main-content {
+    display: block !important;
+    width: 100%;
   }
 
   .tablet-menu-bar {
@@ -789,54 +871,192 @@ body.setting-selected .main-content {
     position: fixed;
     bottom: 0;
     left: 0;
-    z-index: 100;
     width: 100%;
-    height: 0.5rem;
-    justify-content: space-between;
-    border:none;
-    padding: 2rem 2rem;
+    background-color: var(--neutral-000);
+    justify-content: space-around;
+    align-items: center;
     border-top: 1px solid var(--neutral-200);
+    padding: 0.5rem 1rem;
+    z-index: 1000;
   }
+
   .tablet-menu-bar button {
-  background: transparent;   /* remove background */
-  border: none;               /* remove border */
-  padding: 0;                 /* remove extra space */
-  margin: 0;
-  cursor: pointer;
-  outline: none;
-  display: flex;
-  flex-direction: column;   /*  icon on top, text below */
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;  
-  color: var(--neutral-500);
-}
-.tablet-menu-bar button span {
-  display: none;
-}
-  .tablet-menu-bar button:hover,
-.tablet-menu-bar button.active {
-  color: var(--blue-500);
-}
-.create-note-mobile {
+    background: transparent;
+    border: none;
+    cursor: pointer;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 2rem;         /* circular size */
-    height: 2rem;
-    border-radius: 50%;
-    border: 1px solid var(--blue-500);
-    background-color: var(--blue-500);
-    position: fixed;        /* floating button */
-    bottom: 5.5rem;
-    right: 1.5rem;
-    z-index: 100;
-    padding: 0;             /* no extra padding */
+    gap: 0.15rem;
+    color: var(--neutral-600);
+    transition: all 0.2s ease;
+    width: 20%;
+    text-decoration: none;
     
-  box-shadow: 0px 7px 11px rgba(202, 207, 216, 0.7);
   }
-  .create-note-mobile img {
-    width: 1.125rem;
-    height: 1.125rem;
+
+  .tablet-menu-bar button a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
   }
+
+  .tablet-menu-bar a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--neutral-950);
+  }
+
+  .tablet-menu-bar button span,.tablet-menu-bar a span {
+    display: none !important; 
+  }
+  
+  .micon {
+    width: 1.2rem;
+    height: 1.2rem;
+    
+  }
+
+  .tablet-menu-bar button span,
+  .tablet-menu-bar button a span {
+    display: none !important;
+  }
+
+  .tablet-menu-bar button:hover,
+  .tablet-menu-bar button.active {
+    color: var(--blue-500);
+    background-color: var(--blue-50);
+    border-radius: var(--radius-sm);
+  }
+
+  .sidebar-all {
+    padding: 0rem 1rem 2rem 2rem;
+    min-height: calc(100vh - 10rem);
+  }
+
+  body.setting-selected .settings-menu {
+    display: none;
+  }
+
+  body.setting-selected .settings-content {
+    display:none;
+  }
+  /* ONLY show the one that has the style/class applied by your JS */
+body.setting-selected .settings-content[style*="display: block"],
+body.setting-selected .settings-content.active {
+    display: block !important;
+    animation: fadeIn 0.3s ease;
 }
+
+  .settings-content {
+    width: 100%;
+  }
+
+  .header-content {
+    font-size: var(--text-xl);
+    margin-bottom: 0.5rem;
+    color: var(--neutral-950);
+  }
+
+  .para-content {
+    font-size: var(--text-md);
+    color: var(--neutral-600);
+    margin-bottom: 2rem;
+  }
+
+  .color-option label,
+  .font-option label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-md);
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .color-option label:has(input:checked),
+  .font-option label:has(input:checked) {
+    background-color: var(--blue-50);
+    border-color: var(--blue-500);
+  }
+
+  .color-option input,
+  .font-option input {
+    margin-left: auto;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+ 
+
+  body.setting-selected .main-content {
+    display: block !important;
+  }
+
+  .back-to-menu {
+    display: block;
+  }
+  .tablet-menu-bar {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--neutral-000);
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid var(--neutral-200);
+    padding: 0.5rem 1rem;
+    z-index: 1000;
+  }
+  body {
+    font-size: 14px; /* Standard mobile readable size */
+    line-height: 1.5; /* Better spacing for small screens */
+  }
+  input, 
+  button, 
+  .settings-content label {
+    font-size: 14px !important;
+  }
+  /* Hide the list of menu items */
+  body.setting-selected .sidebar-all {
+    display: none !important;
+  }
+
+  /* Show the panel content */
+  body.setting-selected .main-content{
+    display: block !important;
+    padding: 1rem;
+    margin-top: 0;
+  }
+
+  /* Ensure the panels take up full width and aren't squashed */
+  .settings-content {
+    padding: 0.5rem;
+    max-width: 100%;
+  }
+
+  /* Fix the 'Apply' buttons to fit mobile width */
+  .btn-placement {
+    width: 100% !important;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .btn-placement button {
+    width: 100%;
+  }
+
+
+}
+/* SHOW the bottom menu bar on mobile */
+  

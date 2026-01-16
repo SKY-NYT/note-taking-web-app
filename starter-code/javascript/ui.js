@@ -6,6 +6,23 @@ export const clearUI = () => {
     document.querySelector(".right-menu").innerHTML = "";
     document.querySelector(".notes-list").innerHTML = "";
 };
+// HELPER: Saves current editor state to localStorage
+const saveDraftToLocal = (id) => {
+    const titleEl = document.getElementById("edit-title");
+    const contentEl = document.getElementById("edit-content");
+    const tagsEl = document.getElementById("edit-tags");
+
+    if (!titleEl || !contentEl) return;
+
+    const draft = {
+        id: id,
+        title: titleEl.value,
+        content: contentEl.value,
+        tags: tagsEl.value,
+        lastEdited: new Date().toISOString()
+    };
+    localStorage.setItem("note_draft", JSON.stringify(draft));
+};
 // 2. HEADER: Updates title and element visibility based on current section & search
 export const updateHeader = (state, tagName = "") => {
     const header = document.querySelector(".header");
@@ -39,7 +56,7 @@ export const updateHeader = (state, tagName = "") => {
         return;
     }
 
-    // ... rest of your existing logic (Section 2B, 3, 4) ...
+  
 
 
     // 2B. TABLET SEARCH NAVIGATION LOGIC
@@ -213,6 +230,9 @@ export const renderTabletNoteEditor = (note, actions) => {
             </button>
 
             <div class="toolbar-actions">
+            <button id="share-note-btn-mobile" class="action-icon-btn">
+                     <svg class="icon"><use href="#icon-share"></use></svg>
+                </button>
                 <button class="action-icon-btn delete-note">
                     <svg class="icon"><use href="#icon-delete"></use></svg>
                 </button>
@@ -237,6 +257,7 @@ export const renderTabletNoteEditor = (note, actions) => {
     `;
 
     // Listeners
+    contentArea.querySelector("#share-note-btn-mobile").addEventListener("click", () => handleShareClick(note));
     contentArea.querySelector(".btn-back-to-list").addEventListener("click", actions.onBack);
     contentArea.querySelector(".delete-note").addEventListener("click", actions.onDelete);
     contentArea.querySelector(".archive-note").addEventListener("click", actions.onArchive);
@@ -279,6 +300,16 @@ export const clearRightMenu = () => {
     if (rightMenu) rightMenu.innerHTML = "";
 };
 
+// --- NEW HELPER: Generate the encoded URL ---
+const generateShareLink = (note) => {
+    const data = {
+        t: note.title,
+        c: note.content
+    };
+    const encoded = btoa(encodeURIComponent(JSON.stringify(data)));
+    return `${window.location.origin}${window.location.pathname}?share=${encoded}`;
+};
+
 export const renderNoteActions = (note, onArchive, onDelete) => {
     const rightMenu = document.querySelector(".right-menu");
     const archiveText = note.isArchived ? "Restore Note" : "Archive Note";
@@ -286,6 +317,10 @@ export const renderNoteActions = (note, onArchive, onDelete) => {
 
     rightMenu.innerHTML = `
         <div class="actions-column">
+        <button id="share-note-btn" class="action-btn share-btn" title="Share Note">
+                <svg class="icon"><use href="#icon-share"></use></svg>
+                <span>Share Note</span>
+            </button>
             <button class="action-btn archive-btn" title="${archiveText}">
                 <img src="./starter-code/assets/images/${archiveIcon}" alt="">
                 <span>${archiveText}</span>
@@ -296,9 +331,21 @@ export const renderNoteActions = (note, onArchive, onDelete) => {
             </button>
         </div>
     `;
+    
 
     rightMenu.querySelector(".archive-btn").addEventListener("click", onArchive);
     rightMenu.querySelector(".delete-btn").addEventListener("click", onDelete);
+    const shareBtn = rightMenu.querySelector("#share-note-btn");
+    shareBtn.onclick = async () => {
+        const link = generateShareLink(note);
+        try {
+            await navigator.clipboard.writeText(link);
+            // Optional: Replace alert with a nicer Toast later
+            alert("Link copied to clipboard!");
+        } catch (err) {
+            console.error("Failed to copy!", err);
+        }
+    };
 };
 
 // 7. TEMPLATE
@@ -315,4 +362,23 @@ const renderNoteTemplate = (note) => {
         </div>
         <hr class="meta-divider" />
     `;
+};
+// ui.js (Bottom of file)
+
+const handleShareClick = async (note) => {
+    // 1. Prepare data
+    const shareData = { t: note.title, c: note.content };
+    
+    // 2. Encode to Base64
+    const encoded = btoa(encodeURIComponent(JSON.stringify(shareData)));
+    
+    // 3. Build URL
+    const shareUrl = `${window.location.origin}${window.location.pathname}?share=${encoded}`;
+
+    try {
+        await navigator.clipboard.writeText(shareUrl);
+        alert("Share link copied to clipboard!");
+    } catch (err) {
+        console.error("Failed to copy link", err);
+    }
 };

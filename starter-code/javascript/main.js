@@ -1,10 +1,6 @@
 // main.js
 
-// 1. GATEKEEPER: Check if user is logged in before doing anything else
-const user = localStorage.getItem('currentUser');
-if (!user) {
-window.location.href = './starter-code/auth/login.html'; // Adjust path if login.html is in a folder
-}
+
 // 1. IMPORTS
 import * as storage from './storage.js';
 import * as ui from './ui.js';
@@ -29,7 +25,17 @@ const appState = {
 
 // 4. INITIALIZATION
 async function initApp() {
+// 1. Check for shared note FIRST
+    // If a share link exists, we might want to stop the normal app flow
+    const isSharing = checkForSharedNote();
+    if (isSharing) return;// Exit init if we are just viewing a shared note
     // 1. Get the data
+    // 1. GATEKEEPER: Check if user is logged in before doing anything else
+const user = localStorage.getItem('currentUser');
+if (!user) {
+window.location.href = './starter-code/auth/login.html'; // Adjust path if login.html is in a folder
+return;
+}
     allNotes = await storage.loadNotes();
 
     // 2. Clear any "phantom" empty tags immediately
@@ -92,7 +98,7 @@ async function initApp() {
     }    // --- URL REDIRECT LOGIC ENDS HERE ---
 }
 
-// 5. SEARCH LOGIC
+
 // 5. SEARCH LOGIC
 function setupSearch() {
     const searchInput = document.getElementById("searchInput");
@@ -397,3 +403,42 @@ function setupNoteSelection() {
 }
 // 9. START THE APP
 initApp();
+function checkForSharedNote() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const shareData = urlParams.get('share');
+
+    if (shareData) {
+        try {
+            const decoded = JSON.parse(decodeURIComponent(atob(shareData)));
+            
+            // 1. Visual changes for "Read Only"
+            document.body.classList.add('read-only-mode');
+            
+            // 2. Hide standard UI elements that shouldn't be there for a guest
+            const sidebar = document.querySelector('.sidebar-nav');
+            const searchBar = document.querySelector('.search-container');
+            if (sidebar) sidebar.style.display = 'none';
+            if (searchBar) searchBar.style.display = 'none';
+
+            // 3. Render the content into the main area
+            // Note: Ensure these IDs exist in your index.html or use ui.js to render a special view
+            const contentArea = document.querySelector(".content");
+            contentArea.innerHTML = `
+                <div class="shared-note-view">
+                    <h1>${decoded.t}</h1>
+                    <hr />
+                    <div class="note-content">${decoded.c}</div>
+                    <div class="shared-footer">
+                        <a href="index.html" class="btn-primary">Create Your Own Notes</a>
+                    </div>
+                </div>
+            `;
+            
+            return true; // Signal that we are in sharing mode
+        } catch (e) {
+            console.error("Link invalid or corrupted", e);
+            return false;
+        }
+    }
+    return false;
+}

@@ -154,16 +154,73 @@ document.querySelectorAll('.toggle-password').forEach(eye => {
         }
     });
 });
+// ... existing code (Sections 1 through 6) ...
 
-// 7. --- LOGOUT LOGIC ---
+// 7. --- DATA MANAGEMENT (EXPORT/IMPORT) ---
+const exportBtn = document.getElementById('export-notes-btn');
+const importTrigger = document.getElementById('import-notes-trigger');
+const importInput = document.getElementById('import-notes-input');
+
+// EXPORT LOGIC
+exportBtn?.addEventListener('click', async () => {
+    // Uses the imported storage module to get notes
+    const allNotes = await storage.loadNotes();
+    
+    if (allNotes.length === 0) {
+        alert("You have no notes to export.");
+        return;
+    }
+
+    // Generate JSON file
+    const dataStr = JSON.stringify(allNotes, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    // Create a temporary link and click it to trigger download
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `notes-backup-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    
+    // Cleanup
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+});
+
+// IMPORT LOGIC
+importTrigger?.addEventListener('click', () => importInput.click());
+
+importInput?.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+        try {
+            const importedNotes = JSON.parse(event.target.result);
+            
+            if (!Array.isArray(importedNotes)) throw new Error("Invalid format");
+
+            if (confirm(`Are you sure? This will add ${importedNotes.length} notes to your collection.`)) {
+                const currentNotes = await storage.loadNotes();
+                const mergedNotes = [...currentNotes, ...importedNotes];
+                
+                // Save to localStorage and refresh page
+                localStorage.setItem('notes', JSON.stringify(mergedNotes));
+                alert("Notes imported successfully!");
+                window.location.reload(); 
+            }
+        } catch (err) {
+            alert("Error importing file. Please ensure it is a valid JSON notes backup.");
+        }
+    };
+    reader.readAsText(file);
+});
+
+// 8. --- LOGOUT LOGIC ---
 const logoutBtn = document.getElementById('logout');
-if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('currentUser');
-        window.location.href = '/starter-code/auth/login.html'; 
-    });
-}
+// ... rest of your logout code ...
 
-// 8. --- START THE APP ---
-// This one line triggers the async initSettingsPage function above
+// 9. --- START THE APP ---
 initSettingsPage();
