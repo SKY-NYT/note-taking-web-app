@@ -191,12 +191,19 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
                 <div class="meta-row">
                     <svg class="aicon"><use href="#icon-clock"></use></svg>
                     <span>Last Edited:</span>
-                    <span class="read-only-date">${new Date(note.lastEdited).toLocaleDateString()}</span>
+                    <span class="read-only-date">${new Date(note.lastEdited).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
                 </div>
             </div>
         </div>
         <hr class="meta-divider" />
-        <textarea id="edit-content" placeholder="Start typing...">${note.content}</textarea>
+        <div class="editor-toolbar">
+    <button type="button" onclick="formatText('bold')"><b>B</b></button>
+    <button type="button" onclick="formatText('italic')"><i>I</i></button>
+    <button type="button" onclick="formatText('underline')"><u>U</u></button>
+    <button type="button" onclick="formatText('insertUnorderedList')">• List</button>
+    <button type="button" onclick="formatText('insertOrderedList')">1. List</button>
+</div>
+        <div class="textarea" id="edit-content" placeholder="Start typing..." contenteditable="true">${note.content}</div>
         <hr class="meta-divider" />
         <div class="editor-footer">
             <button class="btn-save">Save Note</button>
@@ -206,7 +213,7 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
 
     contentArea.querySelector(".btn-save").addEventListener("click", () => {
         const title = document.getElementById("edit-title").value;
-        const content = document.getElementById("edit-content").value;
+        const content = document.getElementById("edit-content").innerHTML;
         const tags = document.getElementById("edit-tags").value
             .split(",")
             .map(t => t.trim())
@@ -252,7 +259,14 @@ export const renderTabletNoteEditor = (note, actions) => {
                  <input type="text" id="edit-tags" value="${note.tags.join(', ')}" placeholder="Add tags...">
             </div>
             <hr class="meta-divider" />
-            <textarea id="edit-content" placeholder="Start typing...">${note.content}</textarea>
+            <div class="editor-toolbar">
+    <button type="button" onclick="formatText('bold')"><b>B</b></button>
+    <button type="button" onclick="formatText('italic')"><i>I</i></button>
+    <button type="button" onclick="formatText('underline')"><u>U</u></button>
+    <button type="button" onclick="formatText('insertUnorderedList')">• List</button>
+    <button type="button" onclick="formatText('insertOrderedList')">1. List</button>
+</div>
+            <div class="textarea" id="edit-content" placeholder="Start typing..." contenteditable="true">${note.content}</div>
         </div>
     `;
 
@@ -265,7 +279,7 @@ export const renderTabletNoteEditor = (note, actions) => {
     contentArea.querySelector(".btn-save").addEventListener("click", () => {
         const updated = {
             title: document.getElementById("edit-title").value,
-            content: document.getElementById("edit-content").value,
+            content: document.getElementById("edit-content").innerHTML,
             tags: document.getElementById("edit-tags").value.split(',').map(t => t.trim()).filter(t => t)
         };
         actions.onSave(updated);
@@ -382,3 +396,12 @@ const handleShareClick = async (note) => {
         console.error("Failed to copy link", err);
     }
 };
+
+export const formatText = (command) => {
+    const editor = document.getElementById("edit-content");
+    if (!editor) return;
+
+    editor.focus(); // focus must be set for execCommand to work
+    document.execCommand(command, false, null);
+};
+window.formatText = formatText;
