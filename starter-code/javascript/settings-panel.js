@@ -24,8 +24,11 @@ async function initSettingsPage() {
     // UPDATED: Only auto-load panel on Desktop. 
     // On Tablet, we want to see the menu list first.
     if (window.innerWidth > 1024) {
-        const lastPanel = localStorage.getItem("lastSettingsPanel") || "color-theme-content";
-        showPanel(lastPanel);
+       const lastPanel = localStorage.getItem("lastSettingsPanel");
+const panelToLoad = (lastPanel === "data-management-content" || !lastPanel) 
+    ? "color-theme-content" 
+    : lastPanel;
+showPanel(panelToLoad);
     } else {
         hideAllPanels(); // Ensures menu is visible on tablet load
     }
@@ -156,71 +159,13 @@ document.querySelectorAll('.toggle-password').forEach(eye => {
 });
 // ... existing code (Sections 1 through 6) ...
 
-// 7. --- DATA MANAGEMENT (EXPORT/IMPORT) ---
-const exportBtn = document.getElementById('export-notes-btn');
-const importTrigger = document.getElementById('import-notes-trigger');
-const importInput = document.getElementById('import-notes-input');
-
-// EXPORT LOGIC
-exportBtn?.addEventListener('click', async () => {
-    // Uses the imported storage module to get notes
-    const allNotes = await storage.loadNotes();
-    
-    if (allNotes.length === 0) {
-        alert("You have no notes to export.");
-        return;
-    }
-
-    // Generate JSON file
-    const dataStr = JSON.stringify(allNotes, null, 2);
-    const blob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-
-    // Create a temporary link and click it to trigger download
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `notes-backup-${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(link);
-    link.click();
-    
-    // Cleanup
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-});
-
-// IMPORT LOGIC
-importTrigger?.addEventListener('click', () => importInput.click());
-
-importInput?.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-        try {
-            const importedNotes = JSON.parse(event.target.result);
-            
-            if (!Array.isArray(importedNotes)) throw new Error("Invalid format");
-
-            if (confirm(`Are you sure? This will add ${importedNotes.length} notes to your collection.`)) {
-                const currentNotes = await storage.loadNotes();
-                const mergedNotes = [...currentNotes, ...importedNotes];
-                
-                // Save to localStorage and refresh page
-                localStorage.setItem('notes', JSON.stringify(mergedNotes));
-                alert("Notes imported successfully!");
-                window.location.reload(); 
-            }
-        } catch (err) {
-            alert("Error importing file. Please ensure it is a valid JSON notes backup.");
-        }
-    };
-    reader.readAsText(file);
-});
 
 // 8. --- LOGOUT LOGIC ---
 const logoutBtn = document.getElementById('logout');
-// ... rest of your logout code ...
+logoutBtn?.addEventListener('click', () => {
+    localStorage.removeItem('currentUser');
+    window.location.href = '/starter-code/auth/login.html';
+});
 
 // 9. --- START THE APP ---
 initSettingsPage();

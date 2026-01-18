@@ -27,8 +27,7 @@ const appState = {
 async function initApp() {
 // 1. Check for shared note FIRST
     // If a share link exists, we might want to stop the normal app flow
-    const isSharing = checkForSharedNote();
-    if (isSharing) return;// Exit init if we are just viewing a shared note
+// Exit init if we are just viewing a shared note
     // 1. Get the data
     // 1. GATEKEEPER: Check if user is logged in before doing anything else
 const user = localStorage.getItem('currentUser');
