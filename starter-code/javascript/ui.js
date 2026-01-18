@@ -196,7 +196,13 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
             </div>
         </div>
         <hr class="meta-divider" />
-       
+        <div class="editor-toolbar">
+    <button type="button" onclick="formatText('bold')"><b>B</b></button>
+    <button type="button" onclick="formatText('italic')"><i>I</i></button>
+    <button type="button" onclick="formatText('underline')"><u>U</u></button>
+    <button type="button" onclick="formatText('insertUnorderedList')">• List</button>
+    <button type="button" onclick="formatText('insertOrderedList')">1. List</button>
+</div>
         <div class="textarea" id="edit-content" placeholder="Start typing..." contenteditable="true">${note.content}</div>
         <hr class="meta-divider" />
         <div class="editor-footer">
@@ -207,7 +213,7 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
 
     contentArea.querySelector(".btn-save").addEventListener("click", () => {
         const title = document.getElementById("edit-title").value;
-        const content = document.getElementById("edit-content").value;
+        const content = document.getElementById("edit-content").innerHTML;
         const tags = document.getElementById("edit-tags").value
             .split(",")
             .map(t => t.trim())
@@ -375,4 +381,12 @@ const handleShareClick = async (note) => {
         console.error("Failed to copy link", err);
     }
 };
+export const formatText = (command) => {
+    const editor = document.getElementById("edit-content");
+    if (!editor) return;
+
+    editor.focus(); 
+    document.execCommand(command, false, null);
+};
+window.formatText = formatText;
 
