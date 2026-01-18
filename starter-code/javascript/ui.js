@@ -124,7 +124,7 @@ export const renderAllNotes = (notes, state) => {
     }
 };
 
-// ... (Section 3: renderAllNotes is above here)
+
 
 // 3.5 TAG LIST: Renders the tags index for Tablet/Mobile navigation
 export const renderTagsList = (tags, onTagClick) => {
