@@ -17,9 +17,12 @@ async function initSettingsPage() {
     const allNotes = await storage.loadNotes();
     const uniqueTags = noteManager.getAllUniqueTags(allNotes);
     ui.renderSidebarTags(uniqueTags);
+    const uniqueCategories = [...new Set(allNotes.map(n => n.category).filter(Boolean))];
+    ui.renderSidebarCategories(uniqueCategories);
     
     // Set up tag click listeners for redirection
     setupSettingsTagLinks();
+    setupSettingsCategoryLinks();
 
     // UPDATED: Only auto-load panel on Desktop. 
     // On Tablet, we want to see the menu list first.
@@ -32,6 +35,7 @@ showPanel(panelToLoad);
     } else {
         hideAllPanels(); // Ensures menu is visible on tablet load
     }
+
 }
 
 // 3. --- PANEL TOGGLE LOGIC ---
@@ -79,6 +83,19 @@ function setupSettingsTagLinks() {
         if (tagItem) {
             const tag = tagItem.dataset.tag;
             window.location.href = `../index.html?tag=${encodeURIComponent(tag)}`;
+        }
+    });
+}
+function setupSettingsCategoryLinks() {
+    const categoriesSection = document.querySelector('#categories-list');
+    if (!categoriesSection) return;
+
+    categoriesSection.addEventListener('click', (e) => {
+        const catItem = e.target.closest('.nav-item');
+        if (catItem) {
+            const category = catItem.dataset.category;
+            // Redirect to index with the category parameter
+            window.location.href = `../index.html?category=${encodeURIComponent(category)}`;
         }
     });
 }

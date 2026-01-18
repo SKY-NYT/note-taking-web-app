@@ -184,6 +184,34 @@
   background: var(--neutral-200);
 }
 
+/* Sidebar Group Labels (Folders, Tags) */
+.sidebar-label {
+    display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+
+/* Category Badge on Note Cards */
+.category-badge {
+    display: inline-block;
+    background-color: var(--blue-100); /* Using your light blue variable */
+    color: var(--blue-600);           /* Using your dark blue variable */
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Specific styling for the Categories List container */
+#categories-list {
+  overflow-y: auto;   /* Show scrollbar only when notes overflow */
+  padding-right: 0.5rem;
+  scrollbar-width: none;            /* Firefox */
+  -ms-overflow-style: none;
+}
 
 .header {
   grid-area: a;                     /* design height */
@@ -348,6 +376,11 @@
 
 
 #edit-tags {
+  width: 100%;
+  border: none;
+  outline: none;
+}
+#edit-category{
   width: 100%;
   border: none;
   outline: none;
