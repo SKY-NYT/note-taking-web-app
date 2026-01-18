@@ -224,7 +224,7 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
 
     contentArea.querySelector(".btn-cancel").addEventListener("click", onCancel);
 };
-// 4B. Tablet/Mobile version
+// 4b. Tablet/Mobile version 
 export const renderTabletNoteEditor = (note, actions) => {
     const contentArea = document.querySelector(".content");
     const archiveIcon = note.isArchived ? "icon-restore.svg" : "icon-archive.svg";
