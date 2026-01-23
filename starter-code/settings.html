@@ -212,7 +212,12 @@
               <span>Change Password</span>
             </div>
 
-           
+           <div class="settings-item" id="data-management">
+      <svg class="icon">
+        <use href="#icon-info"></use>
+      </svg>
+      <span>Data Management</span>
+    </div>
             <hr class="nav-divider" />
 
             <div class="settings-item" id="logout">
@@ -379,10 +384,29 @@
 
   <div class="btn-placement">
     <button class="save-password-btn">Save Password</button>
+ 
   </div>
 
+</div>
 
-
+<div class="settings-content" id="data-management-content" style="display: none;">
+  <button class="back-to-menu" style="background:none; border:none; color:var(--neutral-000); cursor:pointer; margin-bottom:1rem; ; align-items:center;">
+  <svg class="micon">
+    <use href="#icon-arrow-left"></use>
+  </svg>
+    Settings
+</button>
+  <h2 class="header-content">Data Management</h2>
+  <p class="para-content">Manage your notes data, export, or restore from backup.</p>
+  
+  <div class="btn-group" style="display: flex; gap: 1rem; margin-top: 1rem;">
+    <button id="export-notes-btn" class="apply-color">Export  Notes </button>
+    
+    <input type="file" id="import-notes-input" accept=".json" style="display: none;" />
+    <button id="import-notes-trigger" class="apply-font" style="background-color: var(--neutral-100); color: var(--neutral-900);">
+      Import Notes
+    </button>
+  </div>
 </div>
 
         </div>
