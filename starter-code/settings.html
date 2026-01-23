@@ -74,6 +74,9 @@
   <path fill="none"stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 11.998H8.945m12.055 0-2.932-2.934M21 11.998l-2.932 2.936M14.556 8.266V7.251c0-1.56-1.121-2.891-2.651-3.15L6.702 3.046C4.765 2.718 3 4.219 3 6.195v11.61c0 1.976 1.765 3.477 3.702 3.15l5.203-1.057a3.188 3.188 0 0 0 2.65-3.149v-1.014"/>  
   </symbol>
 
+   <symbol id="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor"> <path  d="M21 10V7a2 2 0 0 0-2-2H9l-3-3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/>
+  <path  d="M15 17H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2z"/></symbol>
+
   <symbol id="icon-sun" viewBox="0 0 24 24">
   <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12.055 3v1.372m0 15.256V21m9-9h-1.372M4.427 12H3.055m15.364-6.364-.97.97M6.66 17.394l-.97.97m12.728 0-.97-.97M6.66 6.606l-.97-.97"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12.055 7.805a4.195 4.195 0 1 1 0 8.39 4.195 4.195 0 0 1 0-8.39Z" clip-rule="evenodd"/>  
   </symbol>
@@ -153,6 +156,10 @@
             </div>
 
             <hr class="nav-divider" />
+
+          <div id="categories-list">
+            </div>
+            <hr class="nav-divider" />
             
             
 
@@ -212,7 +219,12 @@
               <span>Change Password</span>
             </div>
 
-           
+           <div class="settings-item" id="data-management">
+      <svg class="icon">
+        <use href="#icon-info"></use>
+      </svg>
+      <span>Data Management</span>
+    </div>
             <hr class="nav-divider" />
 
             <div class="settings-item" id="logout">
@@ -379,10 +391,29 @@
 
   <div class="btn-placement">
     <button class="save-password-btn">Save Password</button>
+ 
   </div>
 
+</div>
 
-
+<div class="settings-content" id="data-management-content" style="display: none;">
+  <button class="back-to-menu" style="background:none; border:none; color:var(--neutral-000); cursor:pointer; margin-bottom:1rem; ; align-items:center;">
+  <svg class="micon">
+    <use href="#icon-arrow-left"></use>
+  </svg>
+    Settings
+</button>
+  <h2 class="header-content">Data Management</h2>
+  <p class="para-content">Manage your notes data, export, or restore from backup.</p>
+  
+  <div class="btn-group" style="display: flex; gap: 1rem; margin-top: 1rem;">
+    <button id="export-notes-btn" class="apply-color">Export  Notes </button>
+    
+    <input type="file" id="import-notes-input" accept=".json" style="display: none;" />
+    <button id="import-notes-trigger" class="apply-font" style="background-color: var(--neutral-100); color: var(--neutral-900);">
+      Import Notes
+    </button>
+  </div>
 </div>
 
         </div>
@@ -410,6 +441,11 @@
   <button id="menu-tags">
     <svg class="micon"><use href="#icon-tag"></use></svg>
     <span>Tags</span>
+  </button>
+
+  <button id="menu-folders">
+    <svg class="micon"><use href="#icon-folder"></use></svg>
+    <span>Folders</span>
   </button>
 
   <a href="settings.html" class="menu-btn active" id="menu-settings">

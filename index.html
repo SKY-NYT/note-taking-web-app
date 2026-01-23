@@ -81,6 +81,9 @@
         />
       </symbol>
 
+      <symbol id="icon-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor"> <path  d="M21 10V7a2 2 0 0 0-2-2H9l-3-3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/>
+  <path  d="M15 17H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2z"/></symbol>
+
       <symbol id="icon-tag" viewBox="0 0 24 24">
         <path
           fill="none"
@@ -335,7 +338,10 @@
               </svg>
               <span>Archived Notes</span>
             </div>
-
+<hr class="nav-divider" />
+            <div class="sidebar-label">Folders</div>
+          <div id="categories-list">
+            </div>
             <hr class="nav-divider" />
 
             <!-- Tags -->
@@ -428,6 +434,12 @@
         </svg>
         <span>Tags</span>
       </button>
+
+      <button id="menu-folders">
+    <svg class="micon"><use href="#icon-folder"></use></svg>
+    <span>Folders</span>
+  </button>
+  
       <button id="menu-settings">
         <a href="./starter-code/settings.html">
           <svg class="micon">

@@ -46,7 +46,7 @@ return;
 
     // 3. POPULATE SIDEBAR TAGS
     refreshSidebar();
-
+refreshCategories();
     // 4. DEFAULT VIEW: All Notes
     const activeNotes = allNotes.filter(n => !n.isArchived);
     ui.renderAllNotes(activeNotes, appState); 
@@ -67,9 +67,24 @@ return;
     const urlParams = new URLSearchParams(window.location.search);
     const view = urlParams.get('view');
     const tagParam = urlParams.get('tag'); // Catch the tag from settings-panel
+    const categoryParam = urlParams.get('category');
 
-    if (tagParam) {
-        // A. Handle Tag Redirection
+   if (categoryParam) {
+        // A. Handle Category Redirection
+        appState.section = 'category';
+        ui.updateHeader(appState, categoryParam);
+        
+        const categorizedNotes = allNotes.filter(n => 
+            n.category === categoryParam && !n.isArchived
+        );
+        ui.renderAllNotes(categorizedNotes, appState);
+
+        // Highlight the category in the sidebar
+        const sidebarCat = document.querySelector(`.nav-item[data-category="${categoryParam}"]`);
+        if (sidebarCat) sidebarCat.classList.add('active');
+
+    } else if (tagParam) {
+        // B. Handle Tag Redirection
         appState.section = 'tag';
         ui.updateHeader(appState, tagParam);
         
@@ -78,19 +93,17 @@ return;
         );
         ui.renderAllNotes(taggedNotes, appState);
 
-        // Optional: Highlight the tag in the sidebar as 'active'
         const sidebarTag = document.querySelector(`.nav-item[data-tag="${tagParam}"]`);
         if (sidebarTag) sidebarTag.classList.add('active');
 
     } else if (view === 'archived') {
-        // B. Handle Archived View Redirection
+        // C. Handle Archived View Redirection
         appState.section = 'archived';
         ui.updateHeader(appState);
         
         const archivedNotes = allNotes.filter(n => n.isArchived === true);
         ui.renderAllNotes(archivedNotes, appState);
         
-        // Optional: Highlight the archive button in sidebar
         const archiveNav = document.querySelector('.nav-item[data-view="archived"]');
         if (archiveNav) archiveNav.classList.add('active');
     }    // --- URL REDIRECT LOGIC ENDS HERE ---
@@ -225,6 +238,39 @@ function refreshSidebar() {
   ui.renderSidebarTags(uniqueTags);
 }
 
+function refreshCategories() {
+    const categoriesListContainer = document.getElementById('categories-list');
+    
+    // Check 1: Does the HTML element exist?
+    if (!categoriesListContainer) {
+        console.error("Error: Could not find #categories-list in your HTML.");
+        return;
+    }
+
+    // Check 2: Do any notes actually have a category?
+    // This looks at allNotes and pulls out unique categories
+    const categories = [...new Set(allNotes.map(n => n.category || "Uncategorized"))];
+    
+    console.log("Found Categories in data:", categories);
+
+    if (categories.length === 0) {
+        categoriesListContainer.innerHTML = '<p style="padding: 0 1rem; font-size: 12px; color: var(--neutral-500);">No folders yet</p>';
+        return;
+    }
+
+    // 3. Render the HTML
+    categoriesListContainer.innerHTML = categories.map(category => `
+        <div class="nav-item category-filter" data-category="${category}">
+             <svg class="nav-icon">
+                <use href="#icon-folder"></use>
+              </svg>
+            <span>${category}</span>
+        </div>
+    `).join('');
+
+    setupCategoryFiltering(); 
+}
+
 // 7. CREATE NOTE LOGIC
 function setupNoteActions() {
   const createBtn = document.querySelector('.create-note-desktop');
@@ -336,6 +382,7 @@ function saveNoteData(note, data) {
     note.title = data.title;
     note.content = data.content;
     note.tags = data.tags;
+    note.category = data.category;
     note.lastEdited = new Date().toISOString();
     storage.saveNotes(allNotes);
 }
@@ -386,6 +433,31 @@ function setupTagFiltering() {
         );
         
         ui.renderAllNotes(taggedNotes, appState);
+    });
+}
+function setupCategoryFiltering() {
+    const categoriesContainer = document.getElementById('categories-list');
+    
+    categoriesContainer.addEventListener('click', (e) => {
+        const catItem = e.target.closest('.category-filter');
+        if (!catItem) return;
+
+        // Visual Active State
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        catItem.classList.add('active');
+
+        const category = catItem.dataset.category;
+        
+        // Update App State
+        appState.section = 'category';
+        appState.searchQuery = ""; 
+
+        // Filter notes that match this category
+        const filtered = allNotes.filter(n => n.category === category && !n.isArchived);
+        
+        ui.updateHeader(appState, category); 
+        ui.renderAllNotes(filtered, appState);
+        ui.updateHeader(appState, `Categorized: ${category}`);
     });
 }
 function setupNoteSelection() {
