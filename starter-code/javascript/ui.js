@@ -183,6 +183,13 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
         <div class="editor-header">
             <input type="text" id="edit-title" value="${note.title}" placeholder="Note Title">
             <div class="editor-meta">
+            
+                <div class="meta-row">
+                    <svg class="aicon"><use href="#icon-folder"></use></svg>
+                    <span >Category:</span>
+                    <input type="text" id="edit-category" value="${note.category || ''}" placeholder="Add a folder name...">
+                </div>
+
                 <div class="meta-row">
                     <svg class="aicon"><use href="#icon-tag"></use></svg>
                     <span>Tags:</span>
@@ -213,13 +220,14 @@ export const renderNoteEditor = (note, onSave, onCancel) => {
 
     contentArea.querySelector(".btn-save").addEventListener("click", () => {
         const title = document.getElementById("edit-title").value;
-        const content = document.getElementById("edit-content").innerHTML;
+        const content = document.getElementById("edit-content").value;
+        const category = document.getElementById('edit-category').value.trim();
         const tags = document.getElementById("edit-tags").value
             .split(",")
             .map(t => t.trim())
             .filter(t => t !== "");
 
-        onSave({ title, content, tags });
+        onSave({ title, content, tags,category });
     });
 
     contentArea.querySelector(".btn-cancel").addEventListener("click", onCancel);
@@ -237,7 +245,9 @@ export const renderTabletNoteEditor = (note, actions) => {
             </button>
 
             <div class="toolbar-actions">
-            
+            <button id="share-note-btn-mobile" class="action-icon-btn">
+                     <svg class="icon"><use href="#icon-share"></use></svg>
+                </button>
                 <button class="action-icon-btn delete-note">
                     <svg class="icon"><use href="#icon-delete"></use></svg>
                 </button>
@@ -269,7 +279,7 @@ export const renderTabletNoteEditor = (note, actions) => {
     `;
 
     // Listeners
-
+    contentArea.querySelector("#share-note-btn-mobile").addEventListener("click", () => handleShareClick(note));
     contentArea.querySelector(".btn-back-to-list").addEventListener("click", actions.onBack);
     contentArea.querySelector(".delete-note").addEventListener("click", actions.onDelete);
     contentArea.querySelector(".archive-note").addEventListener("click", actions.onArchive);
@@ -305,6 +315,27 @@ export const renderSidebarTags = (tags) => {
         `).join('')}
     `;
 };
+// SIDEBAR: Renders categories (Folders)
+export const renderSidebarCategories = (categories) => {
+    const categoriesSection = document.querySelector("#categories-list");
+    if (!categoriesSection) return;
+
+    // Check if we are currently in the settings page to adjust the link path
+    const isSettingsPage = window.location.pathname.includes('settings.html');
+    const basePath = isSettingsPage ? "../index.html" : "./index.html";
+
+    categoriesSection.innerHTML = `
+        <p class="sidebar-label">Folders</p>
+        ${categories.map(cat => `
+            <div class="nav-item category-filter" data-view="category" data-category="${cat}">
+                <a href="${basePath}?category=${encodeURIComponent(cat)}" class="nav-link-wrapper" style="text-decoration: none; color: inherit; display: flex; align-items: center; width: 100%;">
+                    <svg class="icon"><use href="#icon-folder"></use></svg>
+                    <span>${cat}</span>
+                </a>
+            </div>
+        `).join('')}
+    `;
+};
 
 // 6. ACTIONS: Archive/Delete
 export const clearRightMenu = () => {
@@ -329,7 +360,10 @@ export const renderNoteActions = (note, onArchive, onDelete) => {
 
     rightMenu.innerHTML = `
         <div class="actions-column">
-        
+        <button id="share-note-btn" class="action-btn share-btn" title="Share Note">
+                <svg class="icon"><use href="#icon-share"></use></svg>
+                <span>Share Note</span>
+            </button>
             <button class="action-btn archive-btn" title="${archiveText}">
                 <img src="./starter-code/assets/images/${archiveIcon}" alt="">
                 <span>${archiveText}</span>
@@ -344,13 +378,24 @@ export const renderNoteActions = (note, onArchive, onDelete) => {
 
     rightMenu.querySelector(".archive-btn").addEventListener("click", onArchive);
     rightMenu.querySelector(".delete-btn").addEventListener("click", onDelete);
-    
+    const shareBtn = rightMenu.querySelector("#share-note-btn");
+    shareBtn.onclick = async () => {
+        const link = generateShareLink(note);
+        try {
+            await navigator.clipboard.writeText(link);
+            // Optional: Replace alert with a nicer Toast later
+            alert("Link copied to clipboard!");
+        } catch (err) {
+            console.error("Failed to copy!", err);
+        }
+    };
 };
 
 // 7. TEMPLATE
 const renderNoteTemplate = (note) => {
     return `
         <div class="note-item" data-id="${note.id}">
+        ${note.category ? `<span class="category-badge">${note.category}</span>` : ''}
             <h4>${note.title || "Untitled Note"}</h4>
             <div class="note-tags-wrapper">
                 ${note.tags.map(t => `<span class="note-tag">${t}</span>`).join("")}
@@ -390,3 +435,11 @@ export const formatText = (command) => {
 };
 window.formatText = formatText;
 
+export const formatText = (command) => {
+    const editor = document.getElementById("edit-content");
+    if (!editor) return;
+
+    editor.focus(); // focus must be set for execCommand to work
+    document.execCommand(command, false, null);
+};
+window.formatText = formatText;
